@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "tg-corona-app": {
+      "hosting": {
+        "tg-corona-app": [
+          "tg-corona-app"
+        ]
+      }
+    }
+  }
+}
