@@ -1,0 +1,44 @@
+<h1 mat-dialog-title>Create Request</h1>
+<div mat-dialog-content>
+  <!-- <p>What's your favorite animal?</p> -->
+  <mat-form-field>
+    <mat-label>Details</mat-label>
+    <textarea matInput placeholder="Enter details" [(ngModel)]="data.details"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Point of Contact</mat-label>
+    <input matInput [(ngModel)]="data.poc">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Reference Point of Contact</mat-label>
+    <input matInput [(ngModel)]="data.refPoc">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Channel</mat-label>
+    <mat-select [(value)]="data.channel">
+        <mat-option value="whatsapp">Whatsapp</mat-option>
+        <mat-option value="phone">Phone</mat-option>
+        <mat-option value="email">Email</mat-option>
+        <mat-option value="other">Other</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.channelValue">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Priority</mat-label>
+    <mat-select [(value)]="data.priority">
+      <mat-option value="LOW">LOW</mat-option>
+      <mat-option value="MEDIUM">MEDIUM</mat-option>
+      <mat-option value="HIGH">HIGH</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Volunteer Assigned</mat-label>
+    <input matInput [(ngModel)]="data.volunteer">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClickCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+</div>

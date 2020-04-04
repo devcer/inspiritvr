@@ -1,0 +1,89 @@
+<div>
+    <div>
+        <h2>Requests</h2>
+    </div>
+    <div>
+        <mat-select>
+            <mat-option *ngFor="let period of timePeriods">
+              {{period}}
+            </mat-option>
+        </mat-select>
+        <button mat-raised-button (click)="openDialog()">Pick one</button>
+    </div>
+</div>
+<div>
+    <mat-tab-group>
+        <mat-tab>
+            <ng-template mat-tab-label>
+              <span matBadge="5" matBadgeOverlap="false">Unresolved</span>
+            </ng-template>
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+              
+                <!-- Position Column -->
+                <ng-container matColumnDef="logTime">
+                  <th mat-header-cell *matHeaderCellDef> Log Time </th>
+                  <td mat-cell *matCellDef="let element"> {{element.logTime}} </td>
+                </ng-container>
+              
+                <!-- Name Column -->
+                <ng-container matColumnDef="requestID">
+                  <th mat-header-cell *matHeaderCellDef> Request ID </th>
+                  <td mat-cell *matCellDef="let element"> {{element.requestID}} </td>
+                </ng-container>
+              
+                <!-- Weight Column -->
+                <ng-container matColumnDef="details">
+                  <th mat-header-cell *matHeaderCellDef> Details </th>
+                  <td mat-cell *matCellDef="let element"> {{element.details}} </td>
+                </ng-container>
+              
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="poc">
+                  <th mat-header-cell *matHeaderCellDef> POC </th>
+                  <td mat-cell *matCellDef="let element"> {{element.poc}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="refPoc">
+                    <th mat-header-cell *matHeaderCellDef> Ref. POC </th>
+                    <td mat-cell *matCellDef="let element"> {{element.refPoc}} </td>
+                </ng-container>
+                <ng-container matColumnDef="channel">
+                    <th mat-header-cell *matHeaderCellDef> Channel </th>
+                    <td mat-cell *matCellDef="let element"> {{element.channel}} </td>
+                </ng-container>
+                <ng-container matColumnDef="volunteer">
+                    <th mat-header-cell *matHeaderCellDef> Volunteer </th>
+                    <td mat-cell *matCellDef="let element"> {{element.volunteer}} </td>
+                </ng-container>
+                <ng-container matColumnDef="priority">
+                    <th mat-header-cell *matHeaderCellDef> Priority </th>
+                    <td mat-cell *matCellDef="let element"> {{element.priority}} </td>
+                </ng-container>
+              
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span matBadge="5" matBadgeOverlap="false">Pending</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span matBadge="12" matBadgeOverlap="false">In Progress</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span matBadge="27" matBadgeOverlap="false">Resolved</span>
+          </ng-template>
+        </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span matBadge="9" matBadgeOverlap="false">All Requests</span>
+          </ng-template>
+        </mat-tab>
+    </mat-tab-group>
+</div>
