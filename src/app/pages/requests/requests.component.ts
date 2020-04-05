@@ -3,6 +3,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { TakeRequestDialogComponent } from 'src/app/components/take-request-dialog/take-request-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
+import { DataService } from 'src/app/services/data/data.service';
+import { SelectionModel } from '@angular/cdk/collections';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-requests',
@@ -14,8 +17,8 @@ export class RequestsComponent implements OnInit {
   selectedTimePeriod = 'Today';
   ELEMENT_DATA: RequestElement[] = [
     {logTime: '02/04/2020', requestID: 'Hydrogen', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Helium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Lithium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
+    {logTime: '02/04/2020', requestID: 'Helium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'MEDIUM'},
+    {logTime: '02/04/2020', requestID: 'Lithium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'LOW'},
     {logTime: '02/04/2020', requestID: 'Beryllium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
     {logTime: '02/04/2020', requestID: 'Boron', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
     {logTime: '02/04/2020', requestID: 'Carbon', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
@@ -25,37 +28,75 @@ export class RequestsComponent implements OnInit {
     {logTime: '02/04/2020', requestID: 'Neon', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
   ];
   dataSource = new MatTableDataSource<RequestElement>(this.ELEMENT_DATA);
-  displayedColumns: string[] = ['logTime', 'requestID', 'details', 'poc', 'refPoc', 'channel', 'volunteer', 'priority']
+  selection = new SelectionModel<RequestElement>(true, []);
+  displayedColumns: string[] = ['select', 'logTime', 'requestID', 'details', 'poc', 'refPoc', 'channel', 'volunteer', 'priority']
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  constructor(public dialog: MatDialog) { }
+  requestObj: RequestElement = {
+    details: '',
+    poc: '',
+    refPoc: '',
+    channel: '',
+    channelValue: '',
+    volunteer: '',
+    priority: 'LOW'
+  };
+  constructor(public dialog: MatDialog, private data: DataService, private api: ApiService) { }
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
+    this.data.currentRequest.subscribe(data => {
+      if(data === '')
+        this.openDialog();
+    })
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(TakeRequestDialogComponent, {
       width: '600px',
-      data: this.ELEMENT_DATA[0]
+      data: this.requestObj
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      debugger;
-      console.log('The dialog was closed');
+      console.log(`The dialog was closed ${JSON.stringify(result)}`);
+      if(typeof result !== 'undefined') {
+        this.api.createRequest(this.requestObj);
+      }
       // this.ELEMENT_DATA[0] = result;
     });
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  /** The label for the checkbox on the passed row */
+  checkboxLabel(row?: RequestElement): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.requestID + 1}`;
   }
 
 }
 
 export interface RequestElement {
-  logTime: string;
-  requestID: string;
+  logTime?: string;
+  requestID?: string;
   details: string;
   poc: string;
-  refPoc?: string;
-  channel?: string;
+  refPoc: string;
+  channel: string;
   channelValue?: string;
-  volunteer?: string;
-  priority?: 'HIGH' | 'MEDIUM' |'LOW'
+  volunteer: string;
+  priority?: 'HIGH' | 'MEDIUM' |'LOW';
 }
 

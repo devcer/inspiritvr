@@ -7,7 +7,7 @@ import { RequestsComponent } from './pages/requests/requests.component';
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/reports',
+    redirectTo: '/requests',
     pathMatch: 'full'
   },
   {
