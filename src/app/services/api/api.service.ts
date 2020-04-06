@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { RequestElement } from 'src/app/pages/requests/requests.component';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,7 @@ export class ApiService {
     // priority: 'HIGH' | 'MEDIUM' | 'LOW',
     // assignedTo: string
     data: RequestElement
-  ) {
+  ): Observable<any> {
     const url = `${this.serverUrl}/raiseRequest`;
     const formData = new FormData();
     formData.append('poc', data.poc);
@@ -27,13 +28,10 @@ export class ApiService {
     formData.append('priority', data.priority);
     formData.append('state', 'open');
     formData.append('assignedTo', data.volunteer);
-    this.http.post(url, formData).subscribe(
-      data => {
-        debugger;
-      },
-      error => {
-        console.error(error);
-      }
-    );
+    return this.http.post(url, formData);
+  }
+  getRequestsList(): Observable<any> {
+    const url = `${this.serverUrl}/getRequests`;
+    return this.http.post(url, {})
   }
 }

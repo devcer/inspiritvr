@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data/data.service';
 import { SelectionModel } from '@angular/cdk/collections';
 import { ApiService } from 'src/app/services/api/api.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-requests',
@@ -40,13 +41,46 @@ export class RequestsComponent implements OnInit {
     volunteer: '',
     priority: 'LOW'
   };
-  constructor(public dialog: MatDialog, private data: DataService, private api: ApiService) { }
+  constructor(public dialog: MatDialog, private data: DataService, private api: ApiService) {}
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
     this.data.currentRequest.subscribe(data => {
       if(data === '')
         this.openDialog();
+    });
+    this.getRequestsList();
+  }
+  getRequestsList(): void {
+    this.api.getRequestsList().subscribe(data => {
+      data.requests.forEach(item => {
+        this.dataSource.data.push({
+          logTime: item.date,
+          requestID: item.requestID,
+          details: item.details,
+          poc: item.poc,
+          refPoc: item.rpoc,
+          channel: item.channel,
+          volunteer: item.assignedTo,
+          priority: item.priority.toUpperCase()
+        });
+        this.dataSource.paginator = this.paginator;
+      });
+    });
+  }
+  createRequest() {
+    this.api.createRequest(this.requestObj).subscribe(data => {
+      Swal.fire({
+        title: 'Request creation successful',
+        icon: 'success' 
+      });
+      this.getRequestsList();
+    }, error => {
+      console.error(error.message || '');
+      Swal.fire({
+        title: 'Request creation failed',
+        icon: 'error' 
+      });
     })
   }
   openDialog(): void {
@@ -58,9 +92,8 @@ export class RequestsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`The dialog was closed ${JSON.stringify(result)}`);
       if(typeof result !== 'undefined') {
-        this.api.createRequest(this.requestObj);
+        this.createRequest();
       }
-      // this.ELEMENT_DATA[0] = result;
     });
   }
 
