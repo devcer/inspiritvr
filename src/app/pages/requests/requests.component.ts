@@ -16,18 +16,7 @@ import Swal from 'sweetalert2';
 export class RequestsComponent implements OnInit {
   timePeriods = ['Today', '3 Days', 'Week', 'Month'];
   selectedTimePeriod = 'Today';
-  ELEMENT_DATA: RequestElement[] = [
-    {logTime: '02/04/2020', requestID: 'Hydrogen', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Helium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'MEDIUM'},
-    {logTime: '02/04/2020', requestID: 'Lithium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'LOW'},
-    {logTime: '02/04/2020', requestID: 'Beryllium', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Boron', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Carbon', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Nitrogen', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Oxygen', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Fluorine', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-    {logTime: '02/04/2020', requestID: 'Neon', details: 'Need 1000 packet of food for the daily waged located 10KM away from Bolaram, Hyderabad', poc: 'Raj Kumar N', refPoc: 'Rupesh Yadav', channel: 'phone', volunteer: 'Sanjay', priority: 'HIGH'},
-  ];
+  ELEMENT_DATA: RequestElement[] = [];
   dataSource = new MatTableDataSource<RequestElement>(this.ELEMENT_DATA);
   selection = new SelectionModel<RequestElement>(true, []);
   displayedColumns: string[] = ['select', 'logTime', 'requestID', 'details', 'poc', 'refPoc', 'channel', 'volunteer', 'priority']
