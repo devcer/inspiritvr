@@ -1,0 +1,68 @@
+<h1 mat-dialog-title>Create Ticket</h1>
+<div mat-dialog-content>
+  <h2>Request ID: {{data.requestID}}</h2>
+  <h3>Registered Tickets</h3>
+  <div>
+    <mat-card>
+      <mat-card-content matBadge="11" matBadgeSize="medium">Simple card</mat-card-content>
+    </mat-card>
+    <mat-card>
+      <mat-card-content matBadge="11" matBadgeSize="medium">Simple card</mat-card-content>
+    </mat-card>
+  </div>
+  <label id="nature-ticket-label">Nature of Ticket</label>
+  <mat-radio-group class="radio-group" aria-labelledby="nature-ticket-label" [(ngModel)]="data.natureOfTicket">
+    <mat-radio-button class="radio-button" value="give">Give</mat-radio-button>
+    <mat-radio-button class="radio-button" value="need">Need</mat-radio-button>
+  </mat-radio-group>
+  <mat-form-field class="width-30">
+    <mat-label>Select Resource</mat-label>
+    <mat-select [(value)]="data.resource">
+      <mat-option *ngFor="let item of resources" [value]="item.displayName">{{item.displayName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Resource Type</mat-label>
+    <input matInput placeholder="Rice, Salt, Sugar, etc." [(ngModel)]="data.resourceDetails">
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Resource Quantity</mat-label>
+    <input matInput [(ngModel)]="data.noOfResourcesNeedAvailable">
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Duration (In Days)</mat-label>
+    <input matInput type="number" [(ngModel)]="data.duration">
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Frequency</mat-label>
+    <mat-select [(value)]="data.frequency">
+      <mat-option *ngFor="let item of frequencies" [value]="item.displayName">{{item.displayName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Location - Distribution Point</mat-label>
+    <input matInput [(ngModel)]="data.location">
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Point of Contact</mat-label>
+    <input matInput [(ngModel)]="data.poc">
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Status</mat-label>
+    <mat-select [(value)]="data.status">
+        <mat-option *ngFor="let item of statuses"  [value]="item.displayName">{{item.displayName}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field class="width-30">
+    <mat-label>Volunteer Assigned</mat-label>
+    <input matInput [(ngModel)]="data.volunteer">
+  </mat-form-field>
+  <mat-form-field class="width-60">
+    <mat-label>Additional Comments</mat-label>
+    <textarea matInput placeholder="Enter Additional comments" [(ngModel)]="data.comment"></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onClickCancel()">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+</div>

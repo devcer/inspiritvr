@@ -23,15 +23,19 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatBadgeModule } from '@angular/material/badge';
-import {MatCheckboxModule} from '@angular/material/checkbox'; 
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatRadioModule } from '@angular/material/radio';
+import {MatCardModule} from '@angular/material/card';
 import { DataService } from './services/data/data.service';
+import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-ticket-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ReportsComponent,
     RequestsComponent,
-    TakeRequestDialogComponent
+    TakeRequestDialogComponent,
+    TakeTicketDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,9 +54,11 @@ import { DataService } from './services/data/data.service';
     MatFormFieldModule,
     MatInputModule,
     MatBadgeModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    MatRadioModule,
+    MatCardModule
   ],
   providers: [DataService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}

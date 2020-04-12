@@ -1,0 +1,28 @@
+// mat-form-field {
+//   // width: 100%;
+//   margin-bottom: 20px;
+// }
+
+.radio-group {
+  display: flex;
+  flex-direction: column;
+  margin: 15px 0;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+.width-30{
+  width: 30%;
+  margin: 10px;
+}
+
+.width-60 {
+  width: 60%;
+  margin: 10px;
+}
+mat-card {
+  width: 50%;
+  margin: 10px;
+}
