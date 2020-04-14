@@ -41,7 +41,7 @@ export class RequestsComponent implements OnInit {
     volunteer: '',
     priority: 'LOW',
   };
-  activeTickets = [];
+  activeTickets: TicketElement[] = [];
   constructor(
     public dialog: MatDialog,
     private data: DataService,
@@ -145,7 +145,8 @@ export class RequestsComponent implements OnInit {
     }`;
   }
   onClickTableCell(row) {
-    const ticket: TicketElement = {
+    this.getTicketsList(row.requestID);
+    const ticket = { // TicketElement + tickets key
       natureOfTicket: 'give',
       requestID: row.requestID,
       resource: '',
@@ -159,7 +160,8 @@ export class RequestsComponent implements OnInit {
       poc: '',
       status: 'Pending',
       volunteer: '',
-      comment: ''
+      comment: '',
+      tickets: this.activeTickets
     };
     const dialogRef = this.dialog.open(TakeTicketDialogComponent, {
       width: '1000px',
@@ -174,9 +176,34 @@ export class RequestsComponent implements OnInit {
     });
   }
   getTickets(requestID: string) {
-    this.api.getTickets(requestID).subscribe(data => {
+    this.api.getTicketsList(requestID).subscribe(data => {
       this.activeTickets = data['response'] || [];
     })
+  }
+  getTicketsList(requestID: string): void {
+    this.activeTickets = [];
+    this.api.getTicketsList(requestID).subscribe(data => {
+      data.tickets.forEach(item => {
+        this.activeTickets.push({
+          natureOfTicket: item.nature,
+          volunteer: item.Volunteer,
+          comment: item.comments,
+          logTime: item.createdDate,
+          duration: item.duration,
+          frequency: item.freq,
+          noOfResourcesNeedAvailable: item.noOfResourcesNA,
+          noOfResourcesConsumed: item.noOfResourcesC,
+          noOfResourcesRemaining: item.noOfResourcesR,
+          poc: item.poc,
+          priority: item.priority,
+          requestID: item.requestID,
+          resource: item.resource,
+          status: item.state,
+          ticketID: item.ticketID,
+          location: item.location
+        });
+      })
+    });
   }
 }
 
@@ -194,10 +221,11 @@ export interface RequestElement {
 }
 
 export interface TicketElement {
+  ticketID?: string;
   natureOfTicket: 'give' | 'need';
   requestID: string;
   resource: string;
-  resourceDetails: string;
+  resourceDetails?: string;
   noOfResourcesNeedAvailable: string; // No of Resources Need/ Available
   noOfResourcesConsumed: string; // No of resources Consumed
   noOfResourcesRemaining: string; // No of resources Remaining
@@ -217,6 +245,7 @@ export interface TicketElement {
   location: string;
   status: 'Pending' | 'In Progress' | 'Resolved' | 'Unresolved';
   volunteer: string; // Volunteer Assigned
-  createdDate?: string;
+  logTime?: string;
   comment: string;
+  priority?: string;
 }

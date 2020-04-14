@@ -1,0 +1,138 @@
+<div>
+    <div>
+      <h2>Tickets</h2>
+    </div>
+    <div>
+        <mat-radio-group
+        [(ngModel)]="natureOfTickets"
+        (change)="updateTicketType()">
+            <mat-radio-button value="give">
+                Gives
+            </mat-radio-button>
+            <mat-radio-button value="need">
+                Needs
+            </mat-radio-button>
+        </mat-radio-group>
+        <mat-form-field>
+          <mat-label>MARK AS</mat-label>
+          <mat-select (selectionChange)="updateStatusTypes($event)">
+            <mat-option *ngFor="let status of statusTypes" [value]="status.value">
+              {{status.displayName}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+    </div>
+  </div>
+  <div>
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="5" matBadgeOverlap="false">Unresolved</span>
+        </ng-template>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <!-- Position Column -->
+          <ng-container matColumnDef="logTime">
+            <th mat-header-cell *matHeaderCellDef>Last Updated</th>
+            <td mat-cell *matCellDef="let element">{{ element.logTime }}</td>
+          </ng-container>
+  
+          <!-- Name Column -->
+          <ng-container matColumnDef="ticketID">
+            <th mat-header-cell *matHeaderCellDef>Ticket ID</th>
+            <td mat-cell *matCellDef="let element">
+              <button (click)="onClickTableCell(element)">{{ element.ticketID }}</button>
+            </td>
+          </ng-container>
+  
+          <!-- Weight Column -->
+          <ng-container matColumnDef="resource">
+            <th mat-header-cell *matHeaderCellDef>Resource</th>
+            <td mat-cell *matCellDef="let element">{{ element.resource }}</td>
+          </ng-container>
+  
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="noOfResourcesNeedAvailable">
+            <th mat-header-cell *matHeaderCellDef>Total Quantity</th>
+            <td mat-cell *matCellDef="let element">{{ element.noOfResourcesNeedAvailable }}</td>
+          </ng-container>
+  
+          <ng-container matColumnDef="noOfResourcesConsumed">
+            <th mat-header-cell *matHeaderCellDef>Consumed</th>
+            <td mat-cell *matCellDef="let element">{{ element.noOfResourcesConsumed }}</td>
+          </ng-container>
+          <ng-container matColumnDef="noOfResourcesRemaining">
+            <th mat-header-cell *matHeaderCellDef>Remaining</th>
+            <td mat-cell *matCellDef="let element">{{ element.noOfResourcesRemaining }}</td>
+          </ng-container>
+          <ng-container matColumnDef="poc">
+            <th mat-header-cell *matHeaderCellDef>POC</th>
+            <td mat-cell *matCellDef="let element">{{ element.poc }}</td>
+          </ng-container>
+          <ng-container matColumnDef="volunteer">
+            <th mat-header-cell *matHeaderCellDef>Volunteer</th>
+            <td mat-cell *matCellDef="let element">{{ element.volunteer }}</td>
+          </ng-container>
+          <ng-container matColumnDef="duration">
+            <th mat-header-cell *matHeaderCellDef>Duration</th>
+            <td mat-cell *matCellDef="let element">{{ element.duration + ' days' }}</td>
+          </ng-container>
+          <ng-container matColumnDef="frequency">
+            <th mat-header-cell *matHeaderCellDef>Frequency</th>
+            <td mat-cell *matCellDef="let element">{{ element.frequency }}</td>
+          </ng-container>
+          <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef>Location</th>
+            <td mat-cell *matCellDef="let element">{{ element.location }}</td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+  
+        <mat-paginator
+          [pageSizeOptions]="[5, 10, 20]"
+          showFirstLastButtons
+        ></mat-paginator>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="5" matBadgeOverlap="false">Pending</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="12" matBadgeOverlap="false">In Progress</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="27" matBadgeOverlap="false">Resolved</span>
+        </ng-template>
+      </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span matBadge="9" matBadgeOverlap="false">All Requests</span>
+        </ng-template>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+  

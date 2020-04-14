@@ -3,11 +3,9 @@
   <h2>Request ID: {{data.requestID}}</h2>
   <h3>Registered Tickets</h3>
   <div>
-    <mat-card>
-      <mat-card-content matBadge="11" matBadgeSize="medium">Simple card</mat-card-content>
-    </mat-card>
-    <mat-card>
-      <mat-card-content matBadge="11" matBadgeSize="medium">Simple card</mat-card-content>
+    <mat-card *ngFor="let ticket of data.tickets">
+      <mat-card-content  matBadgeSize="medium">{{(ticket.natureOfTicket + ' ' + ticket.resource).toUpperCase()}}</mat-card-content>
+      <!-- [matBadge]="ticket.noOfResourcesNeedAvailable" -->
     </mat-card>
   </div>
   <label id="nature-ticket-label">Nature of Ticket</label>

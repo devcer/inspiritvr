@@ -28,6 +28,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import {MatCardModule} from '@angular/material/card';
 import { DataService } from './services/data/data.service';
 import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-ticket-dialog.component';
+import { TicketsComponent } from './pages/tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +37,7 @@ import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-
     RequestsComponent,
     TakeRequestDialogComponent,
     TakeTicketDialogComponent,
+    TicketsComponent,
   ],
   imports: [
     BrowserModule,

@@ -35,9 +35,10 @@ export class ApiService {
     return this.http.post(url, {});
   }
   createTicket(data: TicketElement) {
+    debugger;
     const url = `${this.serverUrl}/raiseTicket`;
     const formData = new FormData();
-    formData.append('nature', data.poc);
+    formData.append('nature', data.natureOfTicket);
     formData.append('requestID',data.requestID);
     formData.append('resource', data.resource);
     formData.append('details', data.resourceDetails);
@@ -52,10 +53,22 @@ export class ApiService {
     formData.append('comments', data.comment);
     return this.http.post(url, formData);
   }
-  getTickets(requestID: string) {
-    const url = `${this.serverUrl}/getTickets`;
+  getTicketsList(requestID = '', natureOfRequest = ''): Observable<any> {
+    const url = `${this.serverUrl}/searchTicketFilter`;
+    const body = requestID === '' ? {} : {requestID};
+    natureOfRequest === '' ? null :body['nature'] = natureOfRequest
+    return this.http.post(url, body);
+  }
+  getTicketDetailsByID(ticketID: string) {
+    const url = `${this.serverUrl}/getTicketByID`;
     const formData = new FormData();
-    formData.append('requestID', requestID);
+    formData.append('ticketNo', ticketID);
     return this.http.post(url, {});
+  }
+  getRequestDetailsByID(requestID: string) {
+    const url = `${this.serverUrl}/getRequestByID`;
+    const formData = new FormData();
+    formData.append('rid', requestID);
+    return this.http.post(url, {requestID});
   }
 }
