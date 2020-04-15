@@ -8,6 +8,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { ApiService } from 'src/app/services/api/api.service';
 import Swal from 'sweetalert2';
 import { TakeTicketDialogComponent } from 'src/app/components/take-ticket-dialog/take-ticket-dialog.component';
+import { formFields } from 'src/app/data/formFields';
 
 @Component({
   selector: 'app-requests',
@@ -42,6 +43,9 @@ export class RequestsComponent implements OnInit {
     priority: 'LOW',
   };
   activeTickets: TicketElement[] = [];
+  requestsList: RequestElement[] = [];
+  statusTypes = formFields.status;
+  selectedTabIndex = 0;
   constructor(
     public dialog: MatDialog,
     private data: DataService,
@@ -56,9 +60,10 @@ export class RequestsComponent implements OnInit {
     this.getRequestsList();
   }
   getRequestsList(): void {
+    this.requestsList = [];
     this.api.getRequestsList().subscribe((data) => {
       data.requests.forEach((item) => {
-        this.dataSource.data.push({
+        this.requestsList.push({
           logTime: item.date,
           requestID: item.requestID,
           details: item.details,
@@ -67,8 +72,12 @@ export class RequestsComponent implements OnInit {
           channel: item.channel,
           volunteer: item.assignedTo,
           priority: item.priority.toUpperCase(),
+          status: item.state
         });
+        this.dataSource.data = this.requestsList;
         this.dataSource.paginator = this.paginator;
+        this.selectedTabIndex = 0;
+        this.selection.clear();
       });
     });
   }
@@ -240,6 +249,41 @@ export class RequestsComponent implements OnInit {
   createUser(userDetails: Person, type: 'user' | 'volunteer') {
     this.api.createUser(userDetails, type).subscribe((data) => {
       console.log(`User created successfully ${JSON.stringify(userDetails)}`);
+    });
+  }
+  selectedTabChange(index: any) {
+    // ev.index 0: all, 1: pending, 2: progress, 3: resolved, 4: unresolved
+    switch(index) {
+      case 0:
+        this.dataSource.data = this.requestsList;
+        break;
+      case 1:
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Pending');
+        break;
+      case 2:
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'In Progress');
+        break;
+      case 3:
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Resolved');
+        break;
+      case 4:
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Unresolved');
+        break;
+    }
+    this.dataSource.paginator = this.paginator;
+    this.selection.clear();
+  }
+  updateStatusTypes(ev: any) {
+    const body = {state: ev.value, IDs: []};
+    this.selection.selected.forEach(item => {
+      body.IDs.push(item.requestID);
+    });
+    this.api.updateRequestsStatus(body).subscribe(data => {
+      Swal.fire({
+        title: 'Ticket(s) status updated',
+        icon: 'success',
+      });
+      this.getRequestsList();
     });
   }
 }

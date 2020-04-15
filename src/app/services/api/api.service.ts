@@ -26,7 +26,7 @@ export class ApiService {
     formData.append('channel', data.channel);
     formData.append('details', data.details);
     formData.append('priority', data.priority);
-    formData.append('state', 'open');
+    formData.append('state', 'Pending');
     formData.append('assignedTo', data.volunteer);
     return this.http.post(url, formData);
   }
@@ -73,6 +73,10 @@ export class ApiService {
   }
   updateTicketsStatus(reqBody: any): Observable<any> {
     const url = `${this.serverUrl}/modManyTicket`;
+    return this.http.post(url, reqBody);
+  }
+  updateRequestsStatus(reqBody: any): Observable<any> {
+    const url = `${this.serverUrl}/modManyRequest`;
     return this.http.post(url, reqBody);
   }
   createUser(userDetails: Person, type: 'user' | 'volunteer') {
