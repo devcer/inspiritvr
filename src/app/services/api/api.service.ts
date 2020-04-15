@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { RequestElement, TicketElement } from 'src/app/pages/requests/requests.component';
+import { RequestElement, TicketElement, Person } from 'src/app/pages/requests/requests.component';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -70,5 +70,26 @@ export class ApiService {
     const formData = new FormData();
     formData.append('rid', requestID);
     return this.http.post(url, {requestID});
+  }
+  updateTicketsStatus(reqBody: any): Observable<any> {
+    const url = `${this.serverUrl}/modManyTicket`;
+    return this.http.post(url, reqBody);
+  }
+  createUser(userDetails: Person, type: 'user' | 'volunteer') {
+    let url = `${this.serverUrl}/createPeople`;
+    const formData = new FormData();
+    formData.append('name', userDetails.name);
+    formData.append('organization', userDetails.organization);
+    formData.append('phone', userDetails.phone);
+    formData.append('email', userDetails.email);
+    formData.append('location', userDetails.location);
+
+    switch(type) {
+      case 'user':
+        formData.append('party', userDetails.party);
+        return this.http.post(`${this.serverUrl}/createPeople`, formData);
+      case 'volunteer':
+        return this.http.post(`${this.serverUrl}/createVolunteer`, formData)
+    }
   }
 }

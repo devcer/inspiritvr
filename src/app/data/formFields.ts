@@ -117,4 +117,82 @@ export const formFields = {
       displayName: 'Breakfast, Lunch & Dinner'
     },
   ],
+  parties: [
+    {
+      value: 'ngo',
+      displayName: 'NGO'
+    },
+    {
+      value: 'Water',
+      displayName: 'District Collector'
+    },
+    {
+      value: 'Water',
+      displayName: 'Tahsildar'
+    },
+    {
+      value: 'Water',
+      displayName: 'Circle Inspector'
+    },
+    {
+      value: 'Water',
+      displayName: 'Commissioner'
+    },
+    {
+      value: 'Water',
+      displayName: 'Individual'
+    },
+    {
+      value: 'Water',
+      displayName: 'Corporate'
+    },
+    {
+      value: 'Water',
+      displayName: 'PSU'
+    },
+    {
+      value: 'Water',
+      displayName: 'Distributor'
+    },
+    {
+      value: 'Water',
+      displayName: 'Packer'
+    },
+    {
+      value: 'Water',
+      displayName: 'T-SIG'
+    }
+  ],
+  channels: [
+    {
+      value: 'Water',
+      displayName: 'Call'
+    },
+    {
+      value: 'Water',
+      displayName: 'WhatsApp'
+    },
+    {
+      value: 'Water',
+      displayName: 'Email'
+    },
+    {
+      value: 'Water',
+      displayName: 'Other'
+    },
+  ],
+  priorities: [
+    {
+      value: 'LOW',
+      displayName: 'LOW'
+    },
+    {
+      value: 'MEDIUM',
+      displayName: 'MEDIUM'
+    },
+    {
+      value: 'HIGH',
+      displayName: 'HIGH'
+    },
+  ]
 };

@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DataService } from 'src/app/services/data/data.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { formFields } from 'src/app/data/formFields';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-tickets',
@@ -40,7 +41,6 @@ export class TicketsComponent implements OnInit {
     private api: ApiService) { }
 
   ngOnInit(): void {
-    this.dataSource.paginator = this.paginator;
     // this.data.currentRequest.subscribe((data) => {
     //   if (data === '') this.openDialog();
     // });
@@ -70,6 +70,8 @@ export class TicketsComponent implements OnInit {
         });
         this.dataSource.paginator = this.paginator;
       });
+      this.dataSource.paginator = this.paginator;
+      this.selection.clear();
     });
   }
   /** Whether the number of selected elements matches the total number of rows. */
@@ -101,8 +103,16 @@ export class TicketsComponent implements OnInit {
     this.getTicketsList('', this.natureOfTickets);
   }
   updateStatusTypes(ev: any) {
-    // ev.value status
-    // this.selection.selected
-    
+    const body = {state: ev.value, IDs: []};
+    this.selection.selected.forEach(item => {
+      body.IDs.push(item.ticketID);
+    });
+    this.api.updateTicketsStatus(body).subscribe(data => {
+      Swal.fire({
+        title: 'Ticket(s) status updated',
+        icon: 'success',
+      });
+      this.getTicketsList('', this.natureOfTickets);
+    });
   }
 }

@@ -72,8 +72,8 @@ export class RequestsComponent implements OnInit {
       });
     });
   }
-  createRequest() {
-    this.api.createRequest(this.requestObj).subscribe(
+  createRequest(requestObj) {
+    this.api.createRequest(requestObj).subscribe(
       (data) => {
         Swal.fire({
           title: 'Request creation successful',
@@ -108,15 +108,46 @@ export class RequestsComponent implements OnInit {
     );
   }
   openDialog(): void {
+    const request = {
+        details: '',
+        poc: '',
+        refPoc: '',
+        channel: '',
+        channelValue: '',
+        volunteer: '',
+        priority: 'LOW',
+      },
+      person: Person = {
+        name: '',
+        organization: '',
+        phone: '',
+        email: '',
+        location: '',
+        party: 'NGO',
+      };
+
     const dialogRef = this.dialog.open(TakeRequestDialogComponent, {
-      width: '600px',
-      data: this.requestObj,
+      width: '1200px',
+      data: {
+        request: { ...request },
+        poc: { ...person },
+        refPoc: { ...person },
+        volunteer: { ...person },
+      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`The dialog was closed ${JSON.stringify(result)}`);
       if (typeof result !== 'undefined') {
-        this.createRequest();
+        this.createRequest({
+          ...result.request,
+          ...{ poc: result.poc.name, refPoc: result.refPoc.name, volunteer: result.volunteer.name },
+        });
+        this.createUser(result.poc, 'user');
+        if (result.refPoc.name !== '') {
+          this.createUser(result.refPoc, 'user');
+        }
+        this.createUser(result.volunteer, 'volunteer');
       }
     });
   }
@@ -146,7 +177,8 @@ export class RequestsComponent implements OnInit {
   }
   onClickTableCell(row) {
     this.getTicketsList(row.requestID);
-    const ticket = { // TicketElement + tickets key
+    const ticket = {
+      // TicketElement + tickets key
       natureOfTicket: 'give',
       requestID: row.requestID,
       resource: '',
@@ -161,7 +193,7 @@ export class RequestsComponent implements OnInit {
       status: 'Pending',
       volunteer: '',
       comment: '',
-      tickets: this.activeTickets
+      tickets: this.activeTickets,
     };
     const dialogRef = this.dialog.open(TakeTicketDialogComponent, {
       width: '1000px',
@@ -176,14 +208,14 @@ export class RequestsComponent implements OnInit {
     });
   }
   getTickets(requestID: string) {
-    this.api.getTicketsList(requestID).subscribe(data => {
+    this.api.getTicketsList(requestID).subscribe((data) => {
       this.activeTickets = data['response'] || [];
-    })
+    });
   }
   getTicketsList(requestID: string): void {
     this.activeTickets = [];
-    this.api.getTicketsList(requestID).subscribe(data => {
-      data.tickets.forEach(item => {
+    this.api.getTicketsList(requestID).subscribe((data) => {
+      data.tickets.forEach((item) => {
         this.activeTickets.push({
           natureOfTicket: item.nature,
           volunteer: item.Volunteer,
@@ -200,9 +232,14 @@ export class RequestsComponent implements OnInit {
           resource: item.resource,
           status: item.state,
           ticketID: item.ticketID,
-          location: item.location
+          location: item.location,
         });
-      })
+      });
+    });
+  }
+  createUser(userDetails: Person, type: 'user' | 'volunteer') {
+    this.api.createUser(userDetails, type).subscribe((data) => {
+      console.log(`User created successfully ${JSON.stringify(userDetails)}`);
     });
   }
 }
@@ -248,4 +285,12 @@ export interface TicketElement {
   logTime?: string;
   comment: string;
   priority?: string;
+}
+export interface Person {
+  name: string;
+  organization: string;
+  phone: string;
+  email: string;
+  location: string;
+  party?: string;
 }
