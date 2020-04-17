@@ -2,20 +2,24 @@ export const formFields = {
   status: [
     {
       value: 'pending',
-      displayName: 'Pending',
+      displayName: 'Open',
     },
     {
       value: 'inProgress',
-      displayName: 'In Progress',
+      displayName: 'Closed',
     },
     {
       value: 'resolved',
-      displayName: 'Resolved',
+      displayName: 'Blocked',
     },
     {
       value: 'unresolved',
-      displayName: 'Unresolved',
+      displayName: 'Can’t Fix',
     },
+    {
+      value: 'unresolved',
+      displayName: 'Standby',
+    }
   ],
   resources: [
     {

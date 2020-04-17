@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { DataService } from './services/data/data.service';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +9,17 @@ import { DataService } from './services/data/data.service';
 })
 export class AppComponent {
   title = 'tg-corona-app';
-  constructor(private data: DataService) {
-    
+  showTakeRequestButton = false;
+  constructor(private data: DataService, private router: Router) {
+    this.router.events.subscribe(event =>  {
+      if(event instanceof NavigationEnd ) {
+        if(event.url === '/requests') {
+          this.showTakeRequestButton = true;
+        } else {
+          this.showTakeRequestButton = false;
+        }
+      }
+    });
   }
   createRequest() {
     this.data.createRequest('');

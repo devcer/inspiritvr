@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
-  styleUrls: ['./tickets.component.scss']
+  styleUrls: ['./tickets.component.scss'],
 })
 export class TicketsComponent implements OnInit {
   timePeriods = ['Today', '3 Days', 'Week', 'Month'];
@@ -31,26 +31,40 @@ export class TicketsComponent implements OnInit {
     'volunteer',
     'duration',
     'frequency',
-    'location'
+    'location',
   ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   natureOfTickets = 'give';
   statusTypes = formFields.status;
-  constructor(public dialog: MatDialog,
+  ticketsList: TicketElement[] = [];
+  selectedTabIndex = 0;
+  ticketsCount: any = {
+    all: 0,
+    pending: 0,
+    inProgress: 0,
+    resolved: 0,
+    unresolved: 0,
+  };
+  constructor(
+    public dialog: MatDialog,
     private data: DataService,
-    private api: ApiService) { }
+    private api: ApiService
+  ) {}
 
   ngOnInit(): void {
     // this.data.currentRequest.subscribe((data) => {
     //   if (data === '') this.openDialog();
     // });
     this.getTicketsList('', this.natureOfTickets);
+    this.api.getTicketsCount().subscribe((data) => {
+      this.ticketsCount = { ...this.ticketsCount, ...data };
+    });
   }
   getTicketsList(ticketID = '', natureOfTicket = ''): void {
-    this.dataSource.data = [];
-    this.api.getTicketsList(ticketID, natureOfTicket).subscribe(data => {
+    this.ticketsList = [];
+    this.api.getTicketsList(ticketID, natureOfTicket).subscribe((data) => {
       data.tickets.forEach((item) => {
-        this.dataSource.data.push({
+        this.ticketsList.push({
           logTime: item.createdDate,
           requestID: item.requestID,
           comment: item.comments,
@@ -66,11 +80,12 @@ export class TicketsComponent implements OnInit {
           volunteer: item.volunteer,
           priority: (item.priority || '').toUpperCase(),
           ticketID: item.ticketNo,
-          location: item.location || ''
+          location: item.location || '',
         });
-        this.dataSource.paginator = this.paginator;
       });
+      this.dataSource.data = this.ticketsList;
       this.dataSource.paginator = this.paginator;
+      this.selectedTabIndex = 0;
       this.selection.clear();
     });
   }
@@ -97,22 +112,63 @@ export class TicketsComponent implements OnInit {
       row.requestID + 1
     }`;
   }
-  onClickTableCell(row) {
-  }
-  updateTicketType(){
+  onClickTableCell(row) {}
+  updateTicketType() {
     this.getTicketsList('', this.natureOfTickets);
   }
   updateStatusTypes(ev: any) {
-    const body = {state: ev.value, IDs: []};
-    this.selection.selected.forEach(item => {
-      body.IDs.push(item.ticketID);
-    });
-    this.api.updateTicketsStatus(body).subscribe(data => {
-      Swal.fire({
-        title: 'Ticket(s) status updated',
-        icon: 'success',
+    const body = { state: ev.value, IDs: [] };
+    if (this.selection.selected.length > 0) {
+      this.selection.selected.forEach((item) => {
+        body.IDs.push(item.ticketID);
       });
-      this.getTicketsList('', this.natureOfTickets);
-    });
+      this.api.updateTicketsStatus(body).subscribe((data) => {
+        Swal.fire({
+          title: 'Ticket(s) status updated',
+          icon: 'success',
+        });
+        this.getTicketsList('', this.natureOfTickets);
+      });
+    } else {
+      Swal.fire({
+        title: 'No tickets selected',
+        icon: 'warning',
+      });
+    }
+  }
+  selectedTabChange(index: any) {
+    // ev.index 0: all, 1: pending, 2: progress, 3: resolved, 4: unresolved
+    switch (index) {
+      case 0:
+        this.dataSource.data = this.ticketsList;
+        break;
+      case 1:
+        this.dataSource.data = this.ticketsList.filter(
+          (item) => item.status === 'Open'
+        );
+        break;
+      case 2:
+        this.dataSource.data = this.ticketsList.filter(
+          (item) => item.status === 'Closed'
+        );
+        break;
+      case 3:
+        this.dataSource.data = this.ticketsList.filter(
+          (item) => item.status === 'Blocked'
+        );
+        break;
+      case 4:
+        this.dataSource.data = this.ticketsList.filter(
+          (item) => item.status === 'Can’t Fix'
+        );
+        break;
+      case 5:
+        this.dataSource.data = this.ticketsList.filter(
+          (item) => item.status === 'Standby'
+        );
+        break;
+    }
+    this.dataSource.paginator = this.paginator;
+    this.selection.clear();
   }
 }

@@ -26,7 +26,7 @@ export class ApiService {
     formData.append('channel', data.channel);
     formData.append('details', data.details);
     formData.append('priority', data.priority);
-    formData.append('state', 'Pending');
+    formData.append('state', 'Open');
     formData.append('assignedTo', data.volunteer);
     return this.http.post(url, formData);
   }
@@ -48,7 +48,7 @@ export class ApiService {
     formData.append('duration', data.duration.toString());
     formData.append('freq', data.frequency);
     formData.append('poc', data.poc);
-    formData.append('state', data.status);
+    formData.append('state', 'Open');
     formData.append('volunteer', data.volunteer);
     formData.append('comments', data.comment);
     return this.http.post(url, formData);
@@ -79,8 +79,7 @@ export class ApiService {
     const url = `${this.serverUrl}/modManyRequest`;
     return this.http.post(url, reqBody);
   }
-  createUser(userDetails: Person, type: 'user' | 'volunteer') {
-    let url = `${this.serverUrl}/createPeople`;
+  createUser(userDetails: Person, type: 'user' | 'volunteer'): Observable<any> {
     const formData = new FormData();
     formData.append('name', userDetails.name);
     formData.append('organization', userDetails.organization);
@@ -95,5 +94,19 @@ export class ApiService {
       case 'volunteer':
         return this.http.post(`${this.serverUrl}/createVolunteer`, formData)
     }
+  }
+  getUsersList(type: 'user' | 'volunteer'): Observable<any> {
+    switch(type) {
+      case 'user':
+        return this.http.post(`${this.serverUrl}/getPeople`, {});
+      case 'volunteer':
+        return this.http.post(`${this.serverUrl}/getVolunteer`, {});
+    }
+  }
+  getRequestsCount() {
+    return this.http.post(`${this.serverUrl}/reqCount`, {});
+  }
+  getTicketsCount() {
+    return this.http.post(`${this.serverUrl}/ticCount`, {});
   }
 }

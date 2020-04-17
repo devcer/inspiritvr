@@ -17,27 +17,32 @@
   <mat-tab-group [(selectedIndex)]="selectedTabIndex" (selectedTabChange)="selectedTabChange($event.index)">
     <mat-tab>
       <ng-template mat-tab-label>
-        <span matBadge="9" matBadgeOverlap="false">All Requests</span>
+        <span [matBadge]="requestsCount.all" matBadgeOverlap="false">All Requests</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span matBadge="5" matBadgeOverlap="false">Pending</span>
+        <span [matBadge]="requestsCount.open" matBadgeOverlap="false">Open</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span matBadge="12" matBadgeOverlap="false">In Progress</span>
+        <span [matBadge]="requestsCount.closed" matBadgeOverlap="false">Closed</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span matBadge="27" matBadgeOverlap="false">Resolved</span>
+        <span [matBadge]="requestsCount.blocked" matBadgeOverlap="false">Blocked</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span matBadge="5" matBadgeOverlap="false">Unresolved</span>
+        <span [matBadge]="requestsCount.cantFix" matBadgeOverlap="false">Can’t Fix</span>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="requestsCount.standby" matBadgeOverlap="false">Standby</span>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

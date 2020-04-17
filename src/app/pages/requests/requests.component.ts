@@ -46,6 +46,14 @@ export class RequestsComponent implements OnInit {
   requestsList: RequestElement[] = [];
   statusTypes = formFields.status;
   selectedTabIndex = 0;
+  requestsCount: any = {
+    all: 0,
+    open: 0,
+    closed: 0,
+    blocked: 0,
+    cantFix: 0,
+    standby: 0,
+  };
   constructor(
     public dialog: MatDialog,
     private data: DataService,
@@ -58,6 +66,9 @@ export class RequestsComponent implements OnInit {
       if (data === '') this.openDialog();
     });
     this.getRequestsList();
+    this.api.getRequestsCount().subscribe(data => {
+      this.requestsCount = {...this.requestsCount, ...data};
+    });
   }
   getRequestsList(): void {
     this.requestsList = [];
@@ -74,11 +85,11 @@ export class RequestsComponent implements OnInit {
           priority: item.priority.toUpperCase(),
           status: item.state
         });
-        this.dataSource.data = this.requestsList;
-        this.dataSource.paginator = this.paginator;
-        this.selectedTabIndex = 0;
-        this.selection.clear();
       });
+      this.dataSource.data = this.requestsList;
+      this.dataSource.paginator = this.paginator;
+      this.selectedTabIndex = 0;
+      this.selection.clear();
     });
   }
   createRequest(requestObj) {
@@ -199,7 +210,7 @@ export class RequestsComponent implements OnInit {
       frequency: 'Daily',
       location: '',
       poc: '',
-      status: 'Pending',
+      status: 'Open',
       volunteer: '',
       comment: '',
       tickets: this.activeTickets,
@@ -258,16 +269,19 @@ export class RequestsComponent implements OnInit {
         this.dataSource.data = this.requestsList;
         break;
       case 1:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Pending');
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Open');
         break;
       case 2:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'In Progress');
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Closed');
         break;
       case 3:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Resolved');
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Blocked');
         break;
       case 4:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Unresolved');
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Can’t Fix');
+        break;
+      case 5:
+        this.dataSource.data = this.requestsList.filter(item => item.status === 'Standby');
         break;
     }
     this.dataSource.paginator = this.paginator;
@@ -275,16 +289,23 @@ export class RequestsComponent implements OnInit {
   }
   updateStatusTypes(ev: any) {
     const body = {state: ev.value, IDs: []};
-    this.selection.selected.forEach(item => {
-      body.IDs.push(item.requestID);
-    });
-    this.api.updateRequestsStatus(body).subscribe(data => {
-      Swal.fire({
-        title: 'Ticket(s) status updated',
-        icon: 'success',
+    if(this.selection.selected.length > 0) {
+      this.selection.selected.forEach(item => {
+        body.IDs.push(item.requestID);
       });
-      this.getRequestsList();
-    });
+      this.api.updateRequestsStatus(body).subscribe(data => {
+        Swal.fire({
+          title: 'Ticket(s) status updated',
+          icon: 'success',
+        });
+        this.getRequestsList();
+      });
+    } else {
+      Swal.fire({
+        title: 'No requests selected',
+        icon: 'warning',
+      });
+    }
   }
 }
 
@@ -298,7 +319,7 @@ export interface RequestElement {
   channelValue?: string;
   volunteer: string;
   priority?: 'HIGH' | 'MEDIUM' | 'LOW';
-  status?: 'Pending' | 'In Progress' | 'Resolved' | 'Unresolved';
+  status?: 'Open' | 'Closed' | 'Blocked' | 'Can’t Fix' | 'Standby';
 }
 
 export interface TicketElement {
@@ -324,7 +345,7 @@ export interface TicketElement {
     | 'Breakfast, Lunch & Dinner';
   poc: string;
   location: string;
-  status: 'Pending' | 'In Progress' | 'Resolved' | 'Unresolved';
+  status: 'Open' | 'Closed' | 'Blocked' | 'Can’t Fix' | 'Standby';
   volunteer: string; // Volunteer Assigned
   logTime?: string;
   comment: string;
@@ -337,4 +358,5 @@ export interface Person {
   email: string;
   location: string;
   party?: string;
+  creation_date?: string;
 }
