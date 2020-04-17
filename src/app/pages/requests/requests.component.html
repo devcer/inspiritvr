@@ -1,8 +1,8 @@
 <div>
-  <div>
+  <div class="margin-20">
     <h2>Requests</h2>
   </div>
-  <div>
+  <div class="margin-20">
     <mat-form-field>
       <mat-label>MARK AS</mat-label>
       <mat-select (selectionChange)="updateStatusTypes($event)">
@@ -11,6 +11,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <button mat-raised-button class="take-request" color="primary" (click)="openDialog()">
+      Take Request
+    </button>
   </div>
 </div>
 <div>

@@ -60,9 +60,10 @@ export class RequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
-    this.data.currentRequest.subscribe((data) => {
-      if (data === '') this.openDialog();
-    });
+    // this.data.currentRequest.subscribe((data) => {
+    //   debugger;
+    //   if (data === '') this.openDialog();
+    // });
     this.getRequestsList();
     this.api.getRequestsCount().subscribe((data) => {
       this.requestsCount = { ...this.requestsCount, ...data };

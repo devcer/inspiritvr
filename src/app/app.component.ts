@@ -11,18 +11,17 @@ export class AppComponent {
   title = 'tg-corona-app';
   showTakeRequestButton = false;
   constructor(private data: DataService, private router: Router) {
-    this.router.events.subscribe(event =>  {
-      if(event instanceof NavigationEnd ) {
-        debugger;
-        if(event.url.includes('requests')) {
-          this.showTakeRequestButton = true;
-        } else {
-          this.showTakeRequestButton = false;
-        }
-      }
-    });
+    // this.router.events.subscribe(event =>  {
+    //   if(event instanceof NavigationEnd ) {
+    //     if(event.url.includes('requests')) {
+    //       this.showTakeRequestButton = true;
+    //     } else {
+    //       this.showTakeRequestButton = false;
+    //     }
+    //   }
+    // });
   }
-  createRequest() {
-    this.data.createRequest('');
-  }
+  // createRequest() {
+  //   this.data.createRequest('');
+  // }
 }
