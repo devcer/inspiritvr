@@ -40,10 +40,11 @@ export class TicketsComponent implements OnInit {
   selectedTabIndex = 0;
   ticketsCount: any = {
     all: 0,
-    pending: 0,
-    inProgress: 0,
-    resolved: 0,
-    unresolved: 0,
+    open: 0,
+    closed: 0,
+    blocked: 0,
+    cantFix: 0,
+    standby: 0,
   };
   constructor(
     public dialog: MatDialog,

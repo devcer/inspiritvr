@@ -38,21 +38,19 @@ export class RequestsComponent implements OnInit {
     poc: '',
     refPoc: '',
     channel: '',
-    channelValue: '',
     volunteer: '',
     priority: 'LOW',
   };
   activeTickets: TicketElement[] = [];
   requestsList: RequestElement[] = [];
-  statusTypes = formFields.status;
+  statusTypes = formFields.states;
   selectedTabIndex = 0;
   requestsCount: any = {
     all: 0,
-    open: 0,
-    closed: 0,
-    blocked: 0,
-    cantFix: 0,
-    standby: 0,
+    pending: 0,
+    inProgress: 0,
+    resolved: 0,
+    unresolved: 0
   };
   constructor(
     public dialog: MatDialog,
@@ -66,8 +64,8 @@ export class RequestsComponent implements OnInit {
       if (data === '') this.openDialog();
     });
     this.getRequestsList();
-    this.api.getRequestsCount().subscribe(data => {
-      this.requestsCount = {...this.requestsCount, ...data};
+    this.api.getRequestsCount().subscribe((data) => {
+      this.requestsCount = { ...this.requestsCount, ...data };
     });
   }
   getRequestsList(): void {
@@ -83,7 +81,7 @@ export class RequestsComponent implements OnInit {
           channel: item.channel,
           volunteer: item.assignedTo,
           priority: item.priority.toUpperCase(),
-          status: item.state
+          status: item.state,
         });
       });
       this.dataSource.data = this.requestsList;
@@ -128,40 +126,20 @@ export class RequestsComponent implements OnInit {
     );
   }
   openDialog(): void {
-    const request = {
-        details: '',
-        poc: '',
-        refPoc: '',
-        channel: '',
-        channelValue: '',
-        volunteer: '',
-        priority: 'LOW',
-      },
-      person: Person = {
-        name: '',
-        organization: '',
-        phone: '',
-        email: '',
-        location: '',
-        party: 'NGO',
-      };
-
     const dialogRef = this.dialog.open(TakeRequestDialogComponent, {
       width: '1200px',
-      data: {
-        request: { ...request },
-        poc: { ...person },
-        refPoc: { ...person },
-        volunteer: { ...person },
-      },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`The dialog was closed ${JSON.stringify(result)}`);
       if (typeof result !== 'undefined') {
         this.createRequest({
-          ...result.request,
-          ...{ poc: result.poc.name, refPoc: result.refPoc.name, volunteer: result.volunteer.name },
+          details: result.details,
+          channel: result.channel,
+          priority: result.priority,
+          poc: result.poc.name,
+          refPoc: result.refPoc.name,
+          volunteer: result.volunteer.name,
         });
         this.createUser(result.poc, 'user');
         if (result.refPoc.name !== '') {
@@ -216,7 +194,7 @@ export class RequestsComponent implements OnInit {
       tickets: this.activeTickets,
     };
     const dialogRef = this.dialog.open(TakeTicketDialogComponent, {
-      width: '1000px',
+      width: '1200px',
       data: ticket,
     });
 
@@ -264,36 +242,41 @@ export class RequestsComponent implements OnInit {
   }
   selectedTabChange(index: any) {
     // ev.index 0: all, 1: pending, 2: progress, 3: resolved, 4: unresolved
-    switch(index) {
+    switch (index) {
       case 0:
         this.dataSource.data = this.requestsList;
         break;
       case 1:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Open');
+        this.dataSource.data = this.requestsList.filter(
+          (item) => item.status === 'Pending'
+        );
         break;
       case 2:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Closed');
+        this.dataSource.data = this.requestsList.filter(
+          (item) => item.status === 'In Progress'
+        );
         break;
       case 3:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Blocked');
+        this.dataSource.data = this.requestsList.filter(
+          (item) => item.status === 'Resolved'
+        );
         break;
       case 4:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Can’t Fix');
-        break;
-      case 5:
-        this.dataSource.data = this.requestsList.filter(item => item.status === 'Standby');
+        this.dataSource.data = this.requestsList.filter(
+          (item) => item.status === 'Unresolved'
+        );
         break;
     }
     this.dataSource.paginator = this.paginator;
     this.selection.clear();
   }
   updateStatusTypes(ev: any) {
-    const body = {state: ev.value, IDs: []};
-    if(this.selection.selected.length > 0) {
-      this.selection.selected.forEach(item => {
+    const body = { state: ev.value, IDs: [] };
+    if (this.selection.selected.length > 0) {
+      this.selection.selected.forEach((item) => {
         body.IDs.push(item.requestID);
       });
-      this.api.updateRequestsStatus(body).subscribe(data => {
+      this.api.updateRequestsStatus(body).subscribe((data) => {
         Swal.fire({
           title: 'Ticket(s) status updated',
           icon: 'success',
@@ -316,10 +299,9 @@ export interface RequestElement {
   poc: string;
   refPoc: string;
   channel: string;
-  channelValue?: string;
   volunteer: string;
   priority?: 'HIGH' | 'MEDIUM' | 'LOW';
-  status?: 'Open' | 'Closed' | 'Blocked' | 'Can’t Fix' | 'Standby';
+  status?: 'Pending' | 'In Progress' | 'Resolved' | 'Unresolved';
 }
 
 export interface TicketElement {
@@ -329,8 +311,8 @@ export interface TicketElement {
   resource: string;
   resourceDetails?: string;
   noOfResourcesNeedAvailable: string; // No of Resources Need/ Available
-  noOfResourcesConsumed: string; // No of resources Consumed
-  noOfResourcesRemaining: string; // No of resources Remaining
+  noOfResourcesConsumed?: string; // No of resources Consumed
+  noOfResourcesRemaining?: string; // No of resources Remaining
   duration: number; // In days
   frequency:
     | 'Daily'
@@ -345,7 +327,7 @@ export interface TicketElement {
     | 'Breakfast, Lunch & Dinner';
   poc: string;
   location: string;
-  status: 'Open' | 'Closed' | 'Blocked' | 'Can’t Fix' | 'Standby';
+  status?: 'Open' | 'Closed' | 'Blocked' | 'Can’t Fix' | 'Standby';
   volunteer: string; // Volunteer Assigned
   logTime?: string;
   comment: string;

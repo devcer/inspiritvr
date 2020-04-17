@@ -34,27 +34,32 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.all" matBadgeOverlap="false">All Requests</span>
+        <span [matBadge]="ticketsCount.all" matBadgeOverlap="false">All Tickets</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.pending" matBadgeOverlap="false">Pending</span>
+        <span [matBadge]="ticketsCount.open" matBadgeOverlap="false">Open</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.inProgress" matBadgeOverlap="false">In Progress</span>
+        <span [matBadge]="ticketsCount.closed" matBadgeOverlap="false">Closed</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.resolved" matBadgeOverlap="false">Resolved</span>
+        <span [matBadge]="ticketsCount.blocked" matBadgeOverlap="false">Blocked</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.unresolved" matBadgeOverlap="false">Unresolved</span>
+        <span [matBadge]="ticketsCount.cantFix" matBadgeOverlap="false">Can’t Fix</span>
+      </ng-template>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [matBadge]="ticketsCount.standby" matBadgeOverlap="false">Standby</span>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

@@ -35,7 +35,6 @@ export class ApiService {
     return this.http.post(url, {});
   }
   createTicket(data: TicketElement) {
-    debugger;
     const url = `${this.serverUrl}/raiseTicket`;
     const formData = new FormData();
     formData.append('nature', data.natureOfTicket);

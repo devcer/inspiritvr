@@ -1,100 +1,153 @@
 <h1 mat-dialog-title>Create Request</h1>
 <div mat-dialog-content>
   <!-- <p>What's your favorite animal?</p> -->
-  <mat-form-field class="width-100">
-    <mat-label>Details</mat-label>
-    <textarea matInput placeholder="Enter details" [(ngModel)]="data.request.details"></textarea>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Point of Contact</mat-label>
-    <input matInput [(ngModel)]="data.poc.name">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Organization</mat-label>
-    <input matInput [(ngModel)]="data.poc.organization">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Phone number</mat-label>
-    <span matPrefix>+91 &nbsp;</span>
-    <input matInput type="tel" placeholder="888-888-8888" [(ngModel)]="data.poc.phone">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Email ID</mat-label>
-    <input matInput type="email" [(ngModel)]="data.poc.email">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Location</mat-label>
-    <input matInput [(ngModel)]="data.poc.location">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Party</mat-label>
-    <mat-select [(value)]="data.poc.party">
-      <mat-option *ngFor="let party of partyList" [value]="party.displayName">{{party.displayName}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Reference Point of Contact</mat-label>
-    <input matInput [(ngModel)]="data.refPoc.name">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Organization</mat-label>
-    <input matInput [(ngModel)]="data.refPoc.organization">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Phone number</mat-label>
-    <span matPrefix>+91 &nbsp;</span>
-    <input matInput type="tel" placeholder="888-888-8888" [(ngModel)]="data.refPoc.phone">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Email ID</mat-label>
-    <input matInput [(ngModel)]="data.refPoc.email">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Location</mat-label>
-    <input matInput [(ngModel)]="data.refPoc.location">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Party</mat-label>
-    <mat-select [(value)]="data.refPoc.party">
-      <mat-option *ngFor="let party of partyList" [value]="party.displayName">{{party.displayName}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Channel</mat-label>
-    <mat-select [(value)]="data.request.channel">
-        <mat-option *ngFor="let channel of channels" [value]="channel.displayName">{{channel.displayName}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Priority</mat-label>
-    <mat-select [(value)]="data.request.priority">
-      <mat-option *ngFor="let priority of priorities" [value]="priority.value">{{priority.displayName}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <br/>
-  <mat-form-field class="width-30">
-    <mat-label>Volunteer Assigned</mat-label>
-    <input matInput [(ngModel)]="data.volunteer.name">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Organization</mat-label>
-    <input matInput [(ngModel)]="data.volunteer.organization">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Phone number</mat-label>
-    <span matPrefix>+91 &nbsp;</span>
-    <input matInput type="tel" placeholder="888-888-8888" [(ngModel)]="data.volunteer.phone">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Email ID</mat-label>
-    <input matInput [(ngModel)]="data.volunteer.email">
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Location</mat-label>
-    <input matInput [(ngModel)]="data.volunteer.location">
-  </mat-form-field>
+  <div [formGroup]="requestForm">
+    <mat-form-field class="width-100">
+      <mat-label>Details</mat-label>
+      <textarea
+        matInput
+        placeholder="Enter details"
+        formControlName="details"
+      ></textarea>
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Channel</mat-label>
+      <mat-select formControlName="channel">
+        <mat-option
+          *ngFor="let channel of channels"
+          [value]="channel.displayName"
+          >{{ channel.displayName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Priority</mat-label>
+      <mat-select formControlName="priority">
+        <mat-option
+          *ngFor="let priority of priorities"
+          [value]="priority.value"
+          >{{ priority.displayName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <div formGroupName="poc">
+      <mat-form-field class="width-30">
+        <mat-label>Point of Contact</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Phone number</mat-label>
+        <span matPrefix>+91 &nbsp;</span>
+        <input
+          matInput
+          type="tel"
+          placeholder="888-888-8888"
+          formControlName="phone"
+        />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Email ID</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Party</mat-label>
+        <mat-select formControlName="party">
+          <mat-option
+            *ngFor="let party of partyList"
+            [value]="party.displayName"
+            >{{ party.displayName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div formGroupName="refPoc">
+      <mat-form-field class="width-30">
+        <mat-label>Reference Point of Contact</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Phone number</mat-label>
+        <span matPrefix>+91 &nbsp;</span>
+        <input
+          matInput
+          type="tel"
+          placeholder="888-888-8888"
+          formControlName="phone"
+        />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Email ID</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Party</mat-label>
+        <mat-select formControlName="party">
+          <mat-option
+            *ngFor="let party of partyList"
+            [value]="party.displayName"
+            >{{ party.displayName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div formGroupName="volunteer">
+      <mat-form-field class="width-30">
+        <mat-label>Volunteer Assigned</mat-label>
+        <input matInput formControlName="name" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Phone number</mat-label>
+        <span matPrefix>+91 &nbsp;</span>
+        <input
+          matInput
+          type="tel"
+          placeholder="888-888-8888"
+          formControlName="phone"
+        />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Email ID</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" />
+      </mat-form-field>
+    </div>
+    <!-- <button type="button" (click)="getForm()" [disabled]="!requestForm.valid">
+      Submit
+    </button> -->
+  </div>
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClickCancel()">Cancel</button>
-  <button mat-raised-button color="primary" [mat-dialog-close]="data" cdkFocusInitial>Create</button>
+  <button
+    mat-raised-button
+    color="primary"
+    [disabled]="!requestForm.valid"
+    [mat-dialog-close]="requestForm.value"
+    cdkFocusInitial
+  >
+    Create
+  </button>
 </div>

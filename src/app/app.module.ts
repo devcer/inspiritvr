@@ -29,6 +29,7 @@ import {MatCardModule} from '@angular/material/card';
 import { DataService } from './services/data/data.service';
 import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-ticket-dialog.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -58,7 +59,8 @@ import { TicketsComponent } from './pages/tickets/tickets.component';
     MatBadgeModule,
     MatCheckboxModule,
     MatRadioModule,
-    MatCardModule
+    MatCardModule,
+    ReactiveFormsModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent],

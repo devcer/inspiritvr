@@ -22,27 +22,22 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="requestsCount.open" matBadgeOverlap="false">Open</span>
+        <span [matBadge]="requestsCount.pending" matBadgeOverlap="false">Pending</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="requestsCount.closed" matBadgeOverlap="false">Closed</span>
+        <span [matBadge]="requestsCount.inProgress" matBadgeOverlap="false">In Progress</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="requestsCount.blocked" matBadgeOverlap="false">Blocked</span>
+        <span [matBadge]="requestsCount.resolved" matBadgeOverlap="false">Resolved</span>
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="requestsCount.cantFix" matBadgeOverlap="false">Can’t Fix</span>
-      </ng-template>
-    </mat-tab>
-    <mat-tab>
-      <ng-template mat-tab-label>
-        <span [matBadge]="requestsCount.standby" matBadgeOverlap="false">Standby</span>
+        <span [matBadge]="requestsCount.unresolved" matBadgeOverlap="false">Unresolved</span>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

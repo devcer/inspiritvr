@@ -19,7 +19,25 @@ export const formFields = {
     {
       value: 'unresolved',
       displayName: 'Standby',
-    }
+    },
+  ],
+  states: [
+    {
+      value: 'pending',
+      displayName: 'Pending',
+    },
+    {
+      value: 'pending',
+      displayName: 'In Progress',
+    },
+    {
+      value: 'pending',
+      displayName: 'Resolved',
+    },
+    {
+      value: 'pending',
+      displayName: 'Unresloved',
+    },
   ],
   resources: [
     {
@@ -82,121 +100,121 @@ export const formFields = {
   frequencies: [
     {
       value: 'Water',
-      displayName: 'Daily'
+      displayName: 'Daily',
     },
     {
       value: 'Water',
-      displayName: 'Once in Two days'
+      displayName: 'Once in Two days',
     },
     {
       value: 'Water',
-      displayName: 'Weekly'
+      displayName: 'Weekly',
     },
     {
       value: 'Water',
-      displayName: 'Breakfast'
+      displayName: 'Breakfast',
     },
     {
       value: 'Water',
-      displayName: 'Lunch'
+      displayName: 'Lunch',
     },
     {
       value: 'Water',
-      displayName: 'Dinner'
+      displayName: 'Dinner',
     },
     {
       value: 'Water',
-      displayName: 'Breakfast & Lunch'
+      displayName: 'Breakfast & Lunch',
     },
     {
       value: 'Water',
-      displayName: 'Lunch & Dinner'
+      displayName: 'Lunch & Dinner',
     },
     {
       value: 'Water',
-      displayName: 'Breakfast & Dinner'
+      displayName: 'Breakfast & Dinner',
     },
     {
       value: 'Water',
-      displayName: 'Breakfast, Lunch & Dinner'
+      displayName: 'Breakfast, Lunch & Dinner',
     },
   ],
   parties: [
     {
       value: 'ngo',
-      displayName: 'NGO'
+      displayName: 'NGO',
     },
     {
       value: 'Water',
-      displayName: 'District Collector'
+      displayName: 'District Collector',
     },
     {
       value: 'Water',
-      displayName: 'Tahsildar'
+      displayName: 'Tahsildar',
     },
     {
       value: 'Water',
-      displayName: 'Circle Inspector'
+      displayName: 'Circle Inspector',
     },
     {
       value: 'Water',
-      displayName: 'Commissioner'
+      displayName: 'Commissioner',
     },
     {
       value: 'Water',
-      displayName: 'Individual'
+      displayName: 'Individual',
     },
     {
       value: 'Water',
-      displayName: 'Corporate'
+      displayName: 'Corporate',
     },
     {
       value: 'Water',
-      displayName: 'PSU'
+      displayName: 'PSU',
     },
     {
       value: 'Water',
-      displayName: 'Distributor'
+      displayName: 'Distributor',
     },
     {
       value: 'Water',
-      displayName: 'Packer'
+      displayName: 'Packer',
     },
     {
       value: 'Water',
-      displayName: 'T-SIG'
-    }
+      displayName: 'T-SIG',
+    },
   ],
   channels: [
     {
       value: 'Water',
-      displayName: 'Call'
+      displayName: 'Call',
     },
     {
       value: 'Water',
-      displayName: 'WhatsApp'
+      displayName: 'WhatsApp',
     },
     {
       value: 'Water',
-      displayName: 'Email'
+      displayName: 'Email',
     },
     {
       value: 'Water',
-      displayName: 'Other'
+      displayName: 'Other',
     },
   ],
   priorities: [
     {
       value: 'LOW',
-      displayName: 'LOW'
+      displayName: 'LOW',
     },
     {
       value: 'MEDIUM',
-      displayName: 'MEDIUM'
+      displayName: 'MEDIUM',
     },
     {
       value: 'HIGH',
-      displayName: 'HIGH'
+      displayName: 'HIGH',
     },
-  ]
+  ],
 };

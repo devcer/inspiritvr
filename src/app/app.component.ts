@@ -13,7 +13,8 @@ export class AppComponent {
   constructor(private data: DataService, private router: Router) {
     this.router.events.subscribe(event =>  {
       if(event instanceof NavigationEnd ) {
-        if(event.url === '/requests') {
+        debugger;
+        if(event.url.includes('requests')) {
           this.showTakeRequestButton = true;
         } else {
           this.showTakeRequestButton = false;
