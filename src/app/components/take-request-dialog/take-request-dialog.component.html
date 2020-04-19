@@ -12,7 +12,7 @@
     </mat-form-field>
     <mat-form-field class="width-30">
       <mat-label>Channel</mat-label>
-      <mat-select formControlName="channel">
+      <mat-select formControlName="channel" required>
         <mat-option
           *ngFor="let channel of channels"
           [value]="channel.displayName"
@@ -22,7 +22,7 @@
     </mat-form-field>
     <mat-form-field class="width-30">
       <mat-label>Priority</mat-label>
-      <mat-select formControlName="priority">
+      <mat-select formControlName="priority" required>
         <mat-option
           *ngFor="let priority of priorities"
           [value]="priority.value"
@@ -33,11 +33,16 @@
     <div formGroupName="poc">
       <mat-form-field class="width-30">
         <mat-label>Point of Contact</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name" required />
       </mat-form-field>
+      <!-- <mat-autocomplete>
+        <mat-option *ngFor="let user of usersList" [value]="user.name">
+          {{ user.name }}
+        </mat-option>
+      </mat-autocomplete> -->
       <mat-form-field class="width-30">
         <mat-label>Organization</mat-label>
-        <input matInput formControlName="organization" />
+        <input matInput formControlName="organization" required />
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Phone number</mat-label>
@@ -47,6 +52,7 @@
           type="tel"
           placeholder="888-888-8888"
           formControlName="phone"
+          required
         />
       </mat-form-field>
       <mat-form-field class="width-30">
@@ -55,11 +61,11 @@
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Location</mat-label>
-        <input matInput formControlName="location" />
+        <input matInput formControlName="location" required />
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Party</mat-label>
-        <mat-select formControlName="party">
+        <mat-select formControlName="party" required>
           <mat-option
             *ngFor="let party of partyList"
             [value]="party.displayName"
@@ -109,11 +115,11 @@
     <div formGroupName="volunteer">
       <mat-form-field class="width-30">
         <mat-label>Volunteer Assigned</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name" required />
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Organization</mat-label>
-        <input matInput formControlName="organization" />
+        <input matInput formControlName="organization" required />
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Phone number</mat-label>
@@ -123,6 +129,7 @@
           type="tel"
           placeholder="888-888-8888"
           formControlName="phone"
+          required
         />
       </mat-form-field>
       <mat-form-field class="width-30">
@@ -131,7 +138,7 @@
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Location</mat-label>
-        <input matInput formControlName="location" />
+        <input matInput formControlName="location" required />
       </mat-form-field>
     </div>
     <!-- <button type="button" (click)="getForm()" [disabled]="!requestForm.valid">

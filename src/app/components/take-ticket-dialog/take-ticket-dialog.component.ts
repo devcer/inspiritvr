@@ -33,14 +33,7 @@ export class TakeTicketDialogComponent implements OnInit {
       location: ['', Validators.required],
       party: ['NGO', Validators.required],
     }),
-    comment: [''],
-    volunteer: this.fb.group({
-      name: ['', Validators.required],
-      organization: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: [''],
-      location: ['', Validators.required],
-    }),
+    comment: ['']
   });
   tickets = []
   constructor(
@@ -61,9 +54,6 @@ export class TakeTicketDialogComponent implements OnInit {
   onClickCancel(): void {
     this.dialogRef.close();
   }
-  getForm(): void {
-    debugger;
-  }
   onClickCreate() {
     const ticketData = this.ticketForm.value; 
     const requestObj = {
@@ -79,7 +69,6 @@ export class TakeTicketDialogComponent implements OnInit {
       comment: ticketData.comment
     };
     this.createUser({...ticketData.poc}, 'user');
-    this.createUser({...ticketData.volunteer}, 'volunteer');
     this.createTicket(requestObj);
   }
   createTicket(requestObj) {

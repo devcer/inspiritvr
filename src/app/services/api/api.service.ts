@@ -26,7 +26,7 @@ export class ApiService {
     formData.append('channel', data.channel);
     formData.append('details', data.details);
     formData.append('priority', data.priority);
-    formData.append('state', 'Open');
+    formData.append('state', 'Pending');
     formData.append('assignedTo', data.volunteer);
     return this.http.post(url, formData);
   }
