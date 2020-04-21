@@ -53,7 +53,18 @@
   <div formGroupName="poc">
     <mat-form-field class="width-30">
       <mat-label>Point of Contact</mat-label>
-      <input matInput formControlName="name" required />
+      <input matInput formControlName="name" [matAutocomplete]="pocAuto" required />
+      <mat-autocomplete
+          #pocAuto="matAutocomplete"
+          (optionSelected)="optionSelected($event.option.value, 'user')"
+        >
+          <mat-option
+            *ngFor="let user of filteredUsersList | async"
+            [value]="user.name"
+          >
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
     </mat-form-field>
     <mat-form-field class="width-30">
       <mat-label>Organization</mat-label>

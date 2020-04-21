@@ -33,13 +33,24 @@
     <div formGroupName="poc">
       <mat-form-field class="width-30">
         <mat-label>Point of Contact</mat-label>
-        <input matInput formControlName="name" required />
+        <input
+          matInput
+          formControlName="name"
+          [matAutocomplete]="pocAuto"
+          required
+        />
+        <mat-autocomplete
+          #pocAuto="matAutocomplete"
+          (optionSelected)="optionSelected($event.option.value, 'user')"
+        >
+          <mat-option
+            *ngFor="let user of filteredUsersList | async"
+            [value]="user.name"
+          >
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
-      <!-- <mat-autocomplete>
-        <mat-option *ngFor="let user of usersList" [value]="user.name">
-          {{ user.name }}
-        </mat-option>
-      </mat-autocomplete> -->
       <mat-form-field class="width-30">
         <mat-label>Organization</mat-label>
         <input matInput formControlName="organization" required />
@@ -77,7 +88,18 @@
     <div formGroupName="refPoc">
       <mat-form-field class="width-30">
         <mat-label>Reference Point of Contact</mat-label>
-        <input matInput formControlName="name" />
+        <input matInput formControlName="name" [matAutocomplete]="refPocAuto"/>
+        <mat-autocomplete
+          #refPocAuto="matAutocomplete"
+          (optionSelected)="optionSelected($event.option.value, 'refUser')"
+        >
+          <mat-option
+            *ngFor="let user of filteredRefUsersList | async"
+            [value]="user.name"
+          >
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Organization</mat-label>
@@ -115,7 +137,18 @@
     <div formGroupName="volunteer">
       <mat-form-field class="width-30">
         <mat-label>Volunteer Assigned</mat-label>
-        <input matInput formControlName="name" required />
+        <input matInput formControlName="name" required [matAutocomplete]="volunteerAuto"/>
+        <mat-autocomplete
+          #volunteerAuto="matAutocomplete"
+          (optionSelected)="optionSelected($event.option.value, 'volunteer')"
+        >
+          <mat-option
+            *ngFor="let user of filteredVolunteersList | async"
+            [value]="user.name"
+          >
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
       </mat-form-field>
       <mat-form-field class="width-30">
         <mat-label>Organization</mat-label>
@@ -145,6 +178,21 @@
       Submit
     </button> -->
   </div>
+  <!-- <form class="example-form" [formGroup]="dummyForm">
+    <mat-form-field class="example-full-width">
+      <input type="text"
+             placeholder="Pick one"
+             aria-label="Number"
+             matInput
+             formControlName="option"
+             [matAutocomplete]="auto">
+      <mat-autocomplete #auto="matAutocomplete">
+        <mat-option *ngFor="let option of options" [value]="option">
+          {{option}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </form> -->
 </div>
 <div mat-dialog-actions>
   <button mat-button (click)="onClickCancel()">Cancel</button>
@@ -152,7 +200,7 @@
     mat-raised-button
     color="primary"
     [disabled]="!requestForm.valid"
-    [mat-dialog-close]="requestForm.value"
+    (click)="onClickCreate()"
     cdkFocusInitial
   >
     Create

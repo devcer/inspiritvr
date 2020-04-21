@@ -134,19 +134,22 @@ export class RequestsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((result) => {
       console.log(`The dialog was closed ${JSON.stringify(result)}`);
       if (typeof result !== 'undefined') {
-        this.createRequest({
-          details: result.details,
-          channel: result.channel,
-          priority: result.priority,
-          poc: result.poc.name,
-          refPoc: result.refPoc.name,
-          volunteer: result.volunteer.name,
-        });
-        this.createUser(result.poc, 'user');
-        if (result.refPoc.name !== '') {
-          this.createUser(result.refPoc, 'user');
+        // this.createRequest({
+        //   details: result.details,
+        //   channel: result.channel,
+        //   priority: result.priority,
+        //   poc: result.poc.name,
+        //   refPoc: result.refPoc.name,
+        //   volunteer: result.volunteer.name,
+        // });
+        // this.createUser(result.poc, 'user');
+        // if (result.refPoc.name !== '') {
+        //   this.createUser(result.refPoc, 'user');
+        // }
+        // this.createUser(result.volunteer, 'volunteer');
+        if(result === 'reloadRequests') {
+          this.getRequestsList();
         }
-        this.createUser(result.volunteer, 'volunteer');
       }
     });
   }

@@ -6,6 +6,8 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 import Swal from 'sweetalert2';
 import { TicketElement, Person } from 'src/app/pages/requests/requests.component';
+import { Observable } from 'rxjs';
+import { startWith, map } from 'rxjs/operators';
 
 
 @Component({
@@ -35,7 +37,9 @@ export class TakeTicketDialogComponent implements OnInit {
     }),
     comment: ['']
   });
-  tickets = []
+  tickets = [];
+  usersList: Person[] = [];
+  filteredUsersList: Observable<Person[]>;
   constructor(
     public dialogRef: MatDialogRef<TakeRequestDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -44,7 +48,19 @@ export class TakeTicketDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.api.getUsersList('user').subscribe((data) => {
+      this.usersList = [...data.people];
+    });
     this.getTicketsList();
+    this.filteredUsersList = this.ticketForm.controls.poc
+      .get('name')
+      .valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) =>
+          name ? this._filter(name, 'user') : this.usersList.slice()
+        )
+      );
   }
   getTicketsList() {
     this.api.getTicketsList(this.data.requestID).subscribe(data => {
@@ -65,7 +81,6 @@ export class TakeTicketDialogComponent implements OnInit {
       frequency: ticketData.frequency,
       location: ticketData.location,
       poc: ticketData.poc.name,
-      volunteer: ticketData.volunteer.name,
       comment: ticketData.comment
     };
     this.createUser({...ticketData.poc}, 'user');
@@ -94,5 +109,29 @@ export class TakeTicketDialogComponent implements OnInit {
     this.api.createUser(userDetails, type).subscribe((data) => {
       console.log(`User created successfully ${JSON.stringify(userDetails)}`);
     });
+  }
+  _filter(name: string, type: string): Person[] {
+    const filterValue = name.toLowerCase();
+    switch (type) {
+      case 'user':
+      default:
+        return this.usersList.filter(
+          (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+        );
+    }
+  }
+  optionSelected(value: string, type: string) {
+    // ev.option.value
+    let user: any = {};
+    const filterValue = value.toLowerCase();
+    switch (type) {
+      case 'user':
+        user = this.usersList.filter(
+          (option) => option.name.toLowerCase() === filterValue
+        )[0];
+        delete user.creation_date;
+        this.ticketForm.controls.poc.setValue(user);
+        break;
+    }
   }
 }
