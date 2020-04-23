@@ -195,11 +195,10 @@
   </form> -->
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onClickCancel()">Cancel</button>
+  <button mat-raised-button color="accent" (click)="onClickCancel()">Cancel</button>
   <button
     mat-raised-button
     color="primary"
-    class="green-color"
     [disabled]="!requestForm.valid"
     (click)="onClickCreate()"
     cdkFocusInitial
