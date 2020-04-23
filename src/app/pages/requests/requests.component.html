@@ -1,6 +1,6 @@
 <div>
   <div class="margin-20">
-    <h2>Requests</h2>
+    <h1>Requests</h1>
   </div>
   <div class="margin-20">
     <mat-form-field>
@@ -11,7 +11,8 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <button mat-raised-button class="take-request" color="primary" (click)="openDialog()">
+    <button mat-raised-button class="take-request green-color" color="primary" (click)="openDialog()">
+      <mat-icon matTooltip="Create Request">info_circle</mat-icon>
       Take Request
     </button>
   </div>
@@ -99,7 +100,11 @@
     </ng-container>
     <ng-container matColumnDef="channel">
       <th mat-header-cell *matHeaderCellDef>Channel</th>
-      <td mat-cell *matCellDef="let element">{{ element.channel }}</td>
+      <td mat-cell *matCellDef="let element">
+        <mat-icon *ngIf="element.channel==='WhatsApp'" matTooltip="Whatsapp">message</mat-icon>
+        <mat-icon *ngIf="element.channel==='Email'" matTooltip="Email">email</mat-icon>
+        <mat-icon *ngIf="element.channel==='Call'" matTooltip="Phone Call">phone_alt</mat-icon>
+      </td>
     </ng-container>
     <ng-container matColumnDef="volunteer">
       <th mat-header-cell *matHeaderCellDef>Volunteer</th>

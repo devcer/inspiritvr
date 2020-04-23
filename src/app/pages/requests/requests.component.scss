@@ -1,25 +1,41 @@
 table {
-    width: 100%;
+  width: 100%;
 }
 
 .red-color {
-    background-color: #f76e6e;
-    color: white;
-    width: 85px;
+  background-color: #f76e6e;
+  color: white;
+  width: 85px;
 }
 .yellow-color {
-    background-color: #ffbc00;
-    color: white;
-    width: 85px;
+  background-color: #ffbc00;
+  color: white;
+  width: 85px;
 }
 .blue-color {
-    background-color: #87b2ff;
-    color: white;
-    width: 85px;
+  background-color: #87b2ff;
+  color: white;
+  width: 85px;
+}
+.green-color {
+  background-color: #68c28f;
+}
+.black-color {
+  color: #193668
 }
 .margin-20 {
-    margin: 20px;
+  margin: 20px;
 }
 .take-request {
-    float: right;
+  float: right;
 }
+.mat-badge-content {
+  background: #68c28f;
+}
+// .mat-tab-label-active {
+//   background-color: #68c28f;
+// }
+// .mat-tab-group.mat-primary .mat-ink-bar,
+// .mat-tab-nav-bar.mat-primary .mat-ink-bar {
+//  background-color:#68c28f;
+// }

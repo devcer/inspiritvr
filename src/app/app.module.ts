@@ -27,6 +27,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import {MatIconModule} from '@angular/material/icon';
+import {MatTooltipModule} from '@angular/material/tooltip'; 
 import { DataService } from './services/data/data.service';
 import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-ticket-dialog.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
@@ -61,6 +63,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatCheckboxModule,
     MatRadioModule,
     MatCardModule,
+    MatIconModule,
+    MatTooltipModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
   ],
