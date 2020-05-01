@@ -134,46 +134,6 @@
         </mat-select>
       </mat-form-field>
     </div>
-    <div formGroupName="volunteer">
-      <mat-form-field class="width-30">
-        <mat-label>Volunteer Assigned</mat-label>
-        <input matInput formControlName="name" required [matAutocomplete]="volunteerAuto"/>
-        <mat-autocomplete
-          #volunteerAuto="matAutocomplete"
-          (optionSelected)="optionSelected($event.option.value, 'volunteer')"
-        >
-          <mat-option
-            *ngFor="let user of filteredVolunteersList | async"
-            [value]="user.name"
-          >
-            {{ user.name }}
-          </mat-option>
-        </mat-autocomplete>
-      </mat-form-field>
-      <mat-form-field class="width-30">
-        <mat-label>Organization</mat-label>
-        <input matInput formControlName="organization" required />
-      </mat-form-field>
-      <mat-form-field class="width-30">
-        <mat-label>Phone number</mat-label>
-        <span matPrefix>+91 &nbsp;</span>
-        <input
-          matInput
-          type="tel"
-          placeholder="888-888-8888"
-          formControlName="phone"
-          required
-        />
-      </mat-form-field>
-      <mat-form-field class="width-30">
-        <mat-label>Email ID</mat-label>
-        <input matInput formControlName="email" />
-      </mat-form-field>
-      <mat-form-field class="width-30">
-        <mat-label>Location</mat-label>
-        <input matInput formControlName="location" required />
-      </mat-form-field>
-    </div>
     <!-- <button type="button" (click)="getForm()" [disabled]="!requestForm.valid">
       Submit
     </button> -->

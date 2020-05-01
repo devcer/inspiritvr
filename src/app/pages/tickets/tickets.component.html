@@ -14,6 +14,10 @@
         Needs
       </mat-radio-button>
     </mat-radio-group>
+    <!-- <mat-button-toggle-group (change)="updateTicketTypeWithButton($event)" name="fontStyle" aria-label="Font Style">
+      <mat-button-toggle value="give">Gives</mat-button-toggle>
+      <mat-button-toggle value="need">Needs</mat-button-toggle>
+    </mat-button-toggle-group> -->
     <mat-form-field>
       <mat-label>MARK AS</mat-label>
       <mat-select (selectionChange)="updateStatusTypes($event)">
@@ -34,7 +38,9 @@
   >
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.all" matBadgeOverlap="false">All Tickets</span>
+        <span [matBadge]="ticketsCount.all" matBadgeOverlap="false"
+          >All Tickets</span
+        >
       </ng-template>
     </mat-tab>
     <mat-tab>
@@ -44,22 +50,30 @@
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.closed" matBadgeOverlap="false">Closed</span>
+        <span [matBadge]="ticketsCount.closed" matBadgeOverlap="false"
+          >Closed</span
+        >
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.blocked" matBadgeOverlap="false">Blocked</span>
+        <span [matBadge]="ticketsCount.blocked" matBadgeOverlap="false"
+          >Blocked</span
+        >
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.cantFix" matBadgeOverlap="false">Can’t Fix</span>
+        <span [matBadge]="ticketsCount.cantFix" matBadgeOverlap="false"
+          >Can’t Fix</span
+        >
       </ng-template>
     </mat-tab>
     <mat-tab>
       <ng-template mat-tab-label>
-        <span [matBadge]="ticketsCount.standby" matBadgeOverlap="false">Standby</span>
+        <span [matBadge]="ticketsCount.standby" matBadgeOverlap="false"
+          >Standby</span
+        >
       </ng-template>
     </mat-tab>
   </mat-tab-group>

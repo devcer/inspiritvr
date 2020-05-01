@@ -5,10 +5,11 @@ import { formFields } from 'src/app/data/formFields';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ApiService } from 'src/app/services/api/api.service';
 import Swal from 'sweetalert2';
-import { TicketElement, Person } from 'src/app/pages/requests/requests.component';
+import {
+  Person,
+} from 'src/app/pages/requests/requests.component';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
-
 
 @Component({
   selector: 'app-take-ticket-dialog',
@@ -35,11 +36,22 @@ export class TakeTicketDialogComponent implements OnInit {
       location: ['', Validators.required],
       party: ['NGO', Validators.required],
     }),
-    comment: ['']
+    volunteer: this.fb.group({
+      name: ['', Validators.required],
+      organization: ['', Validators.required],
+      phone: ['', Validators.required],
+      email: [''],
+      location: ['', Validators.required],
+    }),
+    comment: [''],
   });
   tickets = [];
   usersList: Person[] = [];
+  volunteersList: Person[] = [];
   filteredUsersList: Observable<Person[]>;
+  filteredVolunteersList: Observable<Person[]>;
+  showCreateTicketForm = false;
+  requestDetails: any;
   constructor(
     public dialogRef: MatDialogRef<TakeRequestDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
@@ -51,7 +63,12 @@ export class TakeTicketDialogComponent implements OnInit {
     this.api.getUsersList('user').subscribe((data) => {
       this.usersList = [...data.people];
     });
+    this.api.getUsersList('volunteer').subscribe((data) => {
+      this.volunteersList = data.volunteer;
+      console.log(this.volunteersList);
+    });
     this.getTicketsList();
+    this.getRequestDetails();
     this.filteredUsersList = this.ticketForm.controls.poc
       .get('name')
       .valueChanges.pipe(
@@ -61,17 +78,36 @@ export class TakeTicketDialogComponent implements OnInit {
           name ? this._filter(name, 'user') : this.usersList.slice()
         )
       );
+    this.filteredVolunteersList = this.ticketForm.controls.volunteer
+      .get('name')
+      .valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) =>
+          name ? this._filter(name, 'volunteer') : this.volunteersList.slice()
+        )
+      );
   }
   getTicketsList() {
-    this.api.getTicketsList(this.data.requestID).subscribe(data => {
-      this.tickets = data.tickets
+    this.api.getTicketsList(this.data.requestID).subscribe((data) => {
+      this.tickets = data.tickets;
     });
+  }
+  getRequestDetails() {
+    this.api.getRequestDetailsByID(this.data.requestID).subscribe(
+      (data) => {
+        this.requestDetails = data;
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
   }
   onClickCancel(): void {
     this.dialogRef.close();
   }
   onClickCreate() {
-    const ticketData = this.ticketForm.value; 
+    const ticketData = this.ticketForm.value;
     const requestObj = {
       requestID: this.data.requestID,
       natureOfTicket: ticketData.natureOfTicket,
@@ -81,9 +117,11 @@ export class TakeTicketDialogComponent implements OnInit {
       frequency: ticketData.frequency,
       location: ticketData.location,
       poc: ticketData.poc.name,
-      comment: ticketData.comment
+      comment: ticketData.comment,
+      volunteer: ticketData.volunteer.name
     };
-    this.createUser({...ticketData.poc}, 'user');
+    this.createUser({ ...ticketData.poc }, 'user');
+    this.createUser({ ...ticketData.volunteer }, 'volunteer');
     this.createTicket(requestObj);
   }
   createTicket(requestObj) {
@@ -95,6 +133,7 @@ export class TakeTicketDialogComponent implements OnInit {
           title: 'Ticket creation successful',
           icon: 'success',
         });
+        this.showCreateTicketForm = false;
       },
       (error) => {
         console.error(error.message || '');
@@ -114,8 +153,11 @@ export class TakeTicketDialogComponent implements OnInit {
     const filterValue = name.toLowerCase();
     switch (type) {
       case 'user':
-      default:
         return this.usersList.filter(
+          (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+        );
+      case 'volunteer':
+        return this.volunteersList.filter(
           (option) => option.name.toLowerCase().indexOf(filterValue) === 0
         );
     }
@@ -132,6 +174,16 @@ export class TakeTicketDialogComponent implements OnInit {
         delete user.creation_date;
         this.ticketForm.controls.poc.setValue(user);
         break;
+      case 'volunteer':
+        user = this.volunteersList.filter(
+          (option) => option.name.toLowerCase() === filterValue
+        )[0];
+        delete user.creation_date;
+        this.ticketForm.controls.volunteer.setValue(user);
+        break;
     }
+  }
+  onClickCreateNewTicket() {
+    this.showCreateTicketForm = true;
   }
 }

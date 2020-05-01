@@ -16,9 +16,42 @@
 
 .width-60 {
   width: 60%;
+}
+.margin-10px {
   margin: 10px;
 }
 mat-card {
-  width: 50%;
   margin: 10px;
+}
+
+.main-wrapper{
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.column-one {
+  grid-column: 1/3;
+}
+.column-two {
+  grid-column: 3/5;
+}
+.full-grid-column {
+  grid-column: 1/5;
+}
+.create-new-ticket {
+  float: right;
+}
+
+.light-color {
+  color: #b4b4b4;
+}
+
+.channel, .poc {
+  width: 50%;
+  float: left;
+}
+.logTime, .refPoc {
+  width: 50%;
+  float: right;
 }

@@ -19,21 +19,12 @@ export class TakeRequestDialogComponent implements OnInit {
   priorities = formFields.priorities;
   usersList: Person[] = [];
   refUsersList: Person[] = [];
-  volunteersList: Person[] = [];
   filteredUsersList: Observable<Person[]>;
   filteredRefUsersList: Observable<Person[]>;
-  filteredVolunteersList: Observable<Person[]>;
   requestForm = this.fb.group({
     details: [''],
     channel: ['', Validators.required],
     priority: ['', Validators.required],
-    volunteer: this.fb.group({
-      name: ['', Validators.required],
-      organization: ['', Validators.required],
-      phone: ['', Validators.required],
-      email: [''],
-      location: ['', Validators.required],
-    }),
     poc: this.fb.group({
       name: ['', Validators.required],
       organization: ['', Validators.required],
@@ -63,10 +54,7 @@ export class TakeRequestDialogComponent implements OnInit {
       this.usersList = [...data.people];
       this.refUsersList = [...data.people];
     });
-    this.api.getUsersList('volunteer').subscribe((data) => {
-      this.volunteersList = data.volunteer;
-      console.log(this.volunteersList);
-    });
+
     this.filteredUsersList = this.requestForm.controls.poc
       .get('name')
       .valueChanges.pipe(
@@ -85,15 +73,6 @@ export class TakeRequestDialogComponent implements OnInit {
           name ? this._filter(name, 'refUser') : this.refUsersList.slice()
         )
       );
-    this.filteredVolunteersList = this.requestForm.controls.volunteer
-      .get('name')
-      .valueChanges.pipe(
-        startWith(''),
-        map((value) => (typeof value === 'string' ? value : value.name)),
-        map((name) =>
-          name ? this._filter(name, 'volunteer') : this.volunteersList.slice()
-        )
-      );
   }
   onClickCancel(): void {
     this.dialogRef.close();
@@ -107,10 +86,6 @@ export class TakeRequestDialogComponent implements OnInit {
         );
       case 'refUser':
         return this.refUsersList.filter(
-          (option) => option.name.toLowerCase().indexOf(filterValue) === 0
-        );
-      case 'volunteer':
-        return this.volunteersList.filter(
           (option) => option.name.toLowerCase().indexOf(filterValue) === 0
         );
     }
@@ -134,31 +109,21 @@ export class TakeRequestDialogComponent implements OnInit {
         delete user.creation_date;
         this.requestForm.controls.refPoc.setValue(user);
         break;
-      case 'volunteer':
-        user = this.volunteersList.filter(
-          (option) => option.name.toLowerCase() === filterValue
-        )[0];
-        delete user.creation_date;
-        this.requestForm.controls.volunteer.setValue(user);
-        break;
     }
   }
   onClickCreate() {
     const result = this.requestForm.value;
-    if (typeof result !== 'undefined') {
-      this.createRequest({
-        details: result.details,
-        channel: result.channel,
-        priority: result.priority,
-        poc: result.poc.name,
-        refPoc: result.refPoc.name,
-        volunteer: result.volunteer.name,
-      });
-      this.createUser(result.poc, 'user');
-      if (result.refPoc.name !== '') {
-        this.createUser(result.refPoc, 'user');
-      }
-      this.createUser(result.volunteer, 'volunteer');
+    const requestObj = {
+      details: result.details,
+      channel: result.channel,
+      priority: result.priority,
+      poc: result.poc.name,
+      refPoc: result.refPoc.name
+    };
+    this.createRequest(requestObj);
+    this.createUser(result.poc, 'user');
+    if (result.refPoc.name !== '') {
+      this.createUser(result.refPoc, 'user');
     }
   }
   createRequest(requestObj) {

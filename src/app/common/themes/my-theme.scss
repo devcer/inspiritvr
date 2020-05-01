@@ -1,71 +1,71 @@
-@import '../node_modules/@angular/material/theming';
+@import "../node_modules/@angular/material/theming";
 
 @include mat-core();
 
 $my-primary: (
-    50 : #edf8f2,
-    100 : #d2eddd,
-    200 : #b4e1c7,
-    300 : #95d4b1,
-    400 : #7fcba0,
-    500 : #68c28f,
-    600 : #60bc87,
-    700 : #55b47c,
-    800 : #4bac72,
-    900 : #3a9f60,
-    A100 : #edfff4,
-    A200 : #baffd3,
-    A400 : #87ffb3,
-    A700 : #6effa2,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #000000,
-        700 : #000000,
-        800 : #000000,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50: #edf8f2,
+  100: #d2eddd,
+  200: #b4e1c7,
+  300: #95d4b1,
+  400: #7fcba0,
+  500: #68c28f,
+  600: #60bc87,
+  700: #55b47c,
+  800: #4bac72,
+  900: #3a9f60,
+  A100: #edfff4,
+  A200: #baffd3,
+  A400: #87ffb3,
+  A700: #6effa2,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #000000,
+    700: #000000,
+    800: #000000,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
 );
 
 $my-accent: (
-    50 : #f0f3f7,
-    100 : #dbe1ec,
-    200 : #c3cde0,
-    300 : #aab9d3,
-    400 : #98aac9,
-    500 : #869bc0,
-    600 : #7e93ba,
-    700 : #7389b2,
-    800 : #697faa,
-    900 : #566d9c,
-    A100 : #ffffff,
-    A200 : #cfdfff,
-    A400 : #9cbcff,
-    A700 : #83abff,
-    contrast: (
-        50 : #000000,
-        100 : #000000,
-        200 : #000000,
-        300 : #000000,
-        400 : #000000,
-        500 : #ffffff,
-        600 : #000000,
-        700 : #000000,
-        800 : #ffffff,
-        900 : #ffffff,
-        A100 : #000000,
-        A200 : #000000,
-        A400 : #000000,
-        A700 : #000000,
-    )
+  50: #f0f3f7,
+  100: #dbe1ec,
+  200: #c3cde0,
+  300: #aab9d3,
+  400: #98aac9,
+  500: #869bc0,
+  600: #7e93ba,
+  700: #7389b2,
+  800: #697faa,
+  900: #566d9c,
+  A100: #ffffff,
+  A200: #cfdfff,
+  A400: #9cbcff,
+  A700: #83abff,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #000000,
+    300: #000000,
+    400: #000000,
+    500: #ffffff,
+    600: #000000,
+    700: #000000,
+    800: #ffffff,
+    900: #ffffff,
+    A100: #000000,
+    A200: #000000,
+    A400: #000000,
+    A700: #000000,
+  ),
 );
 
 //the first two are the custom palettes we declared above
@@ -76,5 +76,24 @@ $my-theme-warn: mat-palette($mat-red);
 $my-theme-foreground: #ffffff;
 
 $my-theme: mat-light-theme($my-theme-primary, $my-theme-accent, $my-theme-warn);
+
+// @mixin mix-app-theme($my-theme) {
+//   $primary: map-get($my-theme, $my-primary);
+//   $accent: map-get($my-theme, $my-accent);
+
+//   .mat-button-toggle {
+//     background-color: mat-color($primary);
+//     color: mat-color($primary, default-contrast);
+//   }
+
+//   .mat-button-toggle-disabled {
+//     background-color: rgba(0, 0, 0, 0.12);
+//     color: rgba(0, 0, 0, 0.26);
+//   }
+//   .mat-button-toggle-checked {
+//     background-color: mat-color($accent);
+//     color: mat-color($accent, default-contrast);
+//   }
+// }
 
 @include angular-material-theme($my-theme);

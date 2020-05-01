@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import Swal from 'sweetalert2';
 import { TakeTicketDialogComponent } from 'src/app/components/take-ticket-dialog/take-ticket-dialog.component';
 import { formFields } from 'src/app/data/formFields';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-requests',
@@ -29,10 +30,10 @@ export class RequestsComponent implements OnInit {
     'poc',
     'refPoc',
     'channel',
-    'volunteer',
     'priority',
   ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   requestObj: RequestElement = {
     details: '',
     poc: '',
@@ -60,10 +61,7 @@ export class RequestsComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataSource.paginator = this.paginator;
-    // this.data.currentRequest.subscribe((data) => {
-    //   debugger;
-    //   if (data === '') this.openDialog();
-    // });
+    this.dataSource.sort = this.sort;
     this.getRequestsList();
     this.api.getRequestsCount().subscribe((data) => {
       this.requestsCount = { ...this.requestsCount, ...data };
@@ -179,24 +177,7 @@ export class RequestsComponent implements OnInit {
   }
   onClickTableCell(row) {
     this.getTicketsList(row.requestID);
-    const ticket = {
-      // TicketElement + tickets key
-      natureOfTicket: 'give',
-      requestID: row.requestID,
-      resource: '',
-      resourceDetails: '',
-      noOfResourcesNeedAvailable: '',
-      noOfResourcesConsumed: '',
-      noOfResourcesRemaining: '',
-      duration: 0,
-      frequency: 'Daily',
-      location: '',
-      poc: '',
-      status: 'Open',
-      volunteer: '',
-      comment: '',
-      tickets: this.activeTickets,
-    };
+    const ticket = {...row, ...{tickets: this.activeTickets}};
     const dialogRef = this.dialog.open(TakeTicketDialogComponent, {
       width: '1200px',
       data: ticket,

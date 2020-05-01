@@ -62,13 +62,13 @@ export class ApiService {
     const url = `${this.serverUrl}/getTicketByID`;
     const formData = new FormData();
     formData.append('ticketNo', ticketID);
-    return this.http.post(url, {});
+    return this.http.post(url, formData);
   }
   getRequestDetailsByID(requestID: string) {
     const url = `${this.serverUrl}/getRequestByID`;
     const formData = new FormData();
     formData.append('rid', requestID);
-    return this.http.post(url, {requestID});
+    return this.http.post(url, formData);
   }
   updateTicketsStatus(reqBody: any): Observable<any> {
     const url = `${this.serverUrl}/modManyTicket`;

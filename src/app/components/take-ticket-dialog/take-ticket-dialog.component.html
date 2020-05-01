@@ -1,60 +1,118 @@
 <h1 mat-dialog-title>Create Ticket</h1>
-<div mat-dialog-content [formGroup]="ticketForm">
-  <h2>Request ID: {{ data.requestID }}</h2>
-  <h3>Registered Tickets</h3>
-  <div>
-    <mat-card *ngFor="let ticket of tickets">
-      <mat-card-content
-        [matBadge]="ticket.noOfResourcesNA"
-        matBadgeSize="medium"
-        >{{
-          (ticket.nature + " " + ticket.resource).toUpperCase()
-        }}</mat-card-content
-      >
-    </mat-card>
+
+<div mat-dialog-content>
+  <div id="request-details" class="main-wrapper">
+    <div class="column-one">
+      <div>
+        <p class="light-color">Request ID</p>
+        <h2>{{ data.requestID }}</h2>
+      </div>
+      <div>
+        <div class="channel">
+          <p class="light-color">Channel</p>
+          <h3>{{ data.channel }}</h3>
+        </div>
+        <div class="logTime">
+          <p class="light-color">Log Time</p>
+          <h3>{{ data.logTime }}</h3>
+        </div>
+      </div>
+    </div>
+    <div class="column-two">
+      <div>
+        <p>{{ requestDetails?.poc?.party }}</p>
+        <h3>{{ requestDetails?.poc?.organization }}</h3>
+        <p>{{ requestDetails?.poc?.location }}</p>
+      </div>
+      <div>
+        <div class="poc">
+          <p class="light-color">Point Of Contact</p>
+          <p>{{ requestDetails?.poc?.name }}</p>
+          <p>{{ requestDetails?.poc?.email }}</p>
+          <p>{{ requestDetails?.poc?.phone }}</p>
+        </div>
+        <div class="refPoc">
+          <p class="light-color">Reference Point Of Contact</p>
+          <p>{{ requestDetails?.rpoc_o?.name }}</p>
+          <p>{{ requestDetails?.rpoc_o?.email }}</p>
+          <p>{{ requestDetails?.rpoc_o?.phone }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="full-grid-column">
+      <p class="light-color">Details</p>
+      <p>{{ requestDetails?.requests?.details }}</p>
+    </div>
   </div>
-  <label id="nature-ticket-label">Nature of Ticket</label>
-  <mat-radio-group
-    class="radio-group"
-    aria-labelledby="nature-ticket-label"
-    formControlName="natureOfTicket"
-  >
-    <mat-radio-button class="radio-button" value="give">Give</mat-radio-button>
-    <mat-radio-button class="radio-button" value="need">Need</mat-radio-button>
-  </mat-radio-group>
-  <mat-form-field class="width-30">
-    <mat-label>Select Resource</mat-label>
-    <mat-select formControlName="resource" required>
-      <mat-option *ngFor="let item of resources" [value]="item.displayName">{{
-        item.displayName
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Resource Quantity</mat-label>
-    <input matInput formControlName="noOfResourcesNeedAvailable" required />
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Duration (In Days)</mat-label>
-    <input matInput type="number" formControlName="duration" required />
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Frequency</mat-label>
-    <mat-select formControlName="frequency" required>
-      <mat-option *ngFor="let item of frequencies" [value]="item.displayName">{{
-        item.displayName
-      }}</mat-option>
-    </mat-select>
-  </mat-form-field>
-  <mat-form-field class="width-30">
-    <mat-label>Location - Distribution Point</mat-label>
-    <input matInput formControlName="location" required />
-  </mat-form-field>
-  <div formGroupName="poc">
+  <div class="width-60">
+    <h3  class="light-color" style="display: inline;">Registered Tickets</h3>
+    <button mat-raised-button color="primary" class="create-new-ticket" (click)="onClickCreateNewTicket()">CREATE NEW TICKET</button>
+    <div>
+      <mat-card *ngFor="let ticket of tickets">
+        <mat-card-content
+          [matBadge]="ticket.noOfResourcesNA"
+          matBadgeSize="medium"
+          >{{
+            (ticket.nature + " " + ticket.resource).toUpperCase()
+          }}</mat-card-content
+        >
+      </mat-card>
+    </div>
+  </div>
+  <div [formGroup]="ticketForm" *ngIf="showCreateTicketForm">
+    <label id="nature-ticket-label">Nature of Ticket</label>
+    <mat-radio-group
+      class="radio-group"
+      aria-labelledby="nature-ticket-label"
+      formControlName="natureOfTicket"
+    >
+      <mat-radio-button class="radio-button" value="give"
+        >Give</mat-radio-button
+      >
+      <mat-radio-button class="radio-button" value="need"
+        >Need</mat-radio-button
+      >
+    </mat-radio-group>
     <mat-form-field class="width-30">
-      <mat-label>Point of Contact</mat-label>
-      <input matInput formControlName="name" [matAutocomplete]="pocAuto" required />
-      <mat-autocomplete
+      <mat-label>Select Resource</mat-label>
+      <mat-select formControlName="resource" required>
+        <mat-option *ngFor="let item of resources" [value]="item.displayName">{{
+          item.displayName
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Resource Quantity</mat-label>
+      <input matInput formControlName="noOfResourcesNeedAvailable" required />
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Duration (In Days)</mat-label>
+      <input matInput type="number" formControlName="duration" required />
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Frequency</mat-label>
+      <mat-select formControlName="frequency" required>
+        <mat-option
+          *ngFor="let item of frequencies"
+          [value]="item.displayName"
+          >{{ item.displayName }}</mat-option
+        >
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field class="width-30">
+      <mat-label>Location - Distribution Point</mat-label>
+      <input matInput formControlName="location" required />
+    </mat-form-field>
+    <div formGroupName="poc">
+      <mat-form-field class="width-30">
+        <mat-label>Point of Contact</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          [matAutocomplete]="pocAuto"
+          required
+        />
+        <mat-autocomplete
           #pocAuto="matAutocomplete"
           (optionSelected)="optionSelected($event.option.value, 'user')"
         >
@@ -65,55 +123,100 @@
             {{ user.name }}
           </mat-option>
         </mat-autocomplete>
-    </mat-form-field>
-    <mat-form-field class="width-30">
-      <mat-label>Organization</mat-label>
-      <input matInput formControlName="organization" required />
-    </mat-form-field>
-    <mat-form-field class="width-30">
-      <mat-label>Phone number</mat-label>
-      <span matPrefix>+91 &nbsp;</span>
-      <input
-        matInput
-        type="tel"
-        placeholder="888-888-8888"
-        formControlName="phone"
-        required
-      />
-    </mat-form-field>
-    <mat-form-field class="width-30">
-      <mat-label>Email ID</mat-label>
-      <input matInput type="email" formControlName="email" />
-    </mat-form-field>
-    <mat-form-field class="width-30">
-      <mat-label>Location</mat-label>
-      <input matInput formControlName="location" required />
-    </mat-form-field>
-    <mat-form-field class="width-30">
-      <mat-label>Party</mat-label>
-      <mat-select formControlName="party" required>
-        <mat-option
-          *ngFor="let party of partyList"
-          [value]="party.displayName"
-          >{{ party.displayName }}</mat-option
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" required />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Phone number</mat-label>
+        <span matPrefix>+91 &nbsp;</span>
+        <input
+          matInput
+          type="tel"
+          placeholder="888-888-8888"
+          formControlName="phone"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Email ID</mat-label>
+        <input matInput type="email" formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" required />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Party</mat-label>
+        <mat-select formControlName="party" required>
+          <mat-option
+            *ngFor="let party of partyList"
+            [value]="party.displayName"
+            >{{ party.displayName }}</mat-option
+          >
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div formGroupName="volunteer">
+      <mat-form-field class="width-30">
+        <mat-label>Volunteer Assigned</mat-label>
+        <input
+          matInput
+          formControlName="name"
+          required
+          [matAutocomplete]="volunteerAuto"
+        />
+        <mat-autocomplete
+          #volunteerAuto="matAutocomplete"
+          (optionSelected)="optionSelected($event.option.value, 'volunteer')"
         >
-      </mat-select>
+          <mat-option
+            *ngFor="let user of filteredVolunteersList | async"
+            [value]="user.name"
+          >
+            {{ user.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Organization</mat-label>
+        <input matInput formControlName="organization" required />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Phone number</mat-label>
+        <span matPrefix>+91 &nbsp;</span>
+        <input
+          matInput
+          type="tel"
+          placeholder="888-888-8888"
+          formControlName="phone"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Email ID</mat-label>
+        <input matInput formControlName="email" />
+      </mat-form-field>
+      <mat-form-field class="width-30">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location" required />
+      </mat-form-field>
+    </div>
+    <mat-form-field class="width-60 margin-10px">
+      <mat-label>Additional Comments</mat-label>
+      <textarea
+        matInput
+        placeholder="Enter Additional comments"
+        formControlName="comment"
+      ></textarea>
     </mat-form-field>
   </div>
-  <mat-form-field class="width-60">
-    <mat-label>Additional Comments</mat-label>
-    <textarea
-      matInput
-      placeholder="Enter Additional comments"
-      formControlName="comment"
-    ></textarea>
-  </mat-form-field>
-  <!-- <button type="button" (click)="getForm()" [disabled]="!ticketForm.valid">
-    Submit
-  </button> -->
 </div>
 <div mat-dialog-actions>
-  <button mat-raised-button color="accent" (click)="onClickCancel()">Cancel</button>
+  <button mat-raised-button color="accent" (click)="onClickCancel()">
+    Cancel
+  </button>
   <button
     mat-raised-button
     color="primary"

@@ -1,0 +1,50 @@
+.light-color {
+  color: #b4b4b4;
+}
+.main-wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 10px;
+}
+
+.column-one {
+  grid-column: 1/3;
+}
+.column-two {
+  grid-column: 3/5;
+}
+.full-grid-column {
+  grid-column: 1/5;
+}
+
+.total-quantity,
+.consumed-quantity {
+  float: left;
+  width: 33%;
+  // display: inline;
+}
+
+.remaining-quantity {
+  float: right;
+  width: 33%;
+  // display: inline;
+}
+.requestid,
+.volunteer {
+  float: left;
+  width: 50%;
+}
+.resource,
+.frequency {
+  float: right;
+  width: 50%;
+}
+
+.created-date {
+  float: left;
+  width: 25%;
+}
+.location {
+  float: right;
+  width: 25%;
+}

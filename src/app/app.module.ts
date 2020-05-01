@@ -27,12 +27,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatCardModule } from '@angular/material/card';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTooltipModule} from '@angular/material/tooltip'; 
+import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { DataService } from './services/data/data.service';
 import { TakeTicketDialogComponent } from './components/take-ticket-dialog/take-ticket-dialog.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { MatSortModule } from '@angular/material/sort';
+import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
+import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
 
 @NgModule({
   declarations: [
@@ -42,6 +45,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     TakeRequestDialogComponent,
     TakeTicketDialogComponent,
     TicketsComponent,
+    TicketDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -67,6 +71,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatTooltipModule,
     MatAutocompleteModule,
     ReactiveFormsModule,
+    MatSortModule,
+    MatButtonToggleModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent],

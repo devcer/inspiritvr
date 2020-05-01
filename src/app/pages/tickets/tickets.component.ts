@@ -8,6 +8,7 @@ import { DataService } from 'src/app/services/data/data.service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { formFields } from 'src/app/data/formFields';
 import Swal from 'sweetalert2';
+import { TicketDetailsComponent } from 'src/app/components/ticket-details/ticket-details.component';
 
 @Component({
   selector: 'app-tickets',
@@ -113,7 +114,16 @@ export class TicketsComponent implements OnInit {
       row.requestID + 1
     }`;
   }
-  onClickTableCell(row) {}
+  onClickTableCell(row) {
+    const dialogRef = this.dialog.open(TicketDetailsComponent, {
+      width: '1200px',
+      data: {
+        ticketID: row.ticketID
+      },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+    });
+  }
   updateTicketType() {
     this.getTicketsList('', this.natureOfTickets);
   }
@@ -171,5 +181,8 @@ export class TicketsComponent implements OnInit {
     }
     this.dataSource.paginator = this.paginator;
     this.selection.clear();
+  }
+  updateTicketTypeWithButton(ev) {
+    // debugger;
   }
 }

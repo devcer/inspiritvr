@@ -1,0 +1,90 @@
+<div mat-dialog-content>
+  <div id="ticket-details" class="main-wrapper">
+    <div class="column-one">
+      <div>
+        <div class="requestid">
+          <p class="light-color">Request ID</p>
+          <p>{{ ticketDetails?.ticket?.ticketNo }}</p>
+        </div>
+        <div class="resource">
+          <p class="light-color">Resource</p>
+          <p>{{ ticketDetails?.ticket?.resource }}</p>
+        </div>
+      </div>
+      <div>
+        <p class="light-color">Quantity</p>
+        <div class="total-quantity">
+          <p class="light-color">Total</p>
+          <p>{{ ticketDetails?.ticket?.noOfResourcesNA }}</p>
+        </div>
+        <div class="consumed-quantity">
+          <p class="light-color">Consumed</p>
+          <p>{{ ticketDetails?.ticket?.noOfResourcesC || 0 }}</p>
+        </div>
+        <div class="remaining-quantity">
+          <p class="light-color">Remaining</p>
+          <p>{{ ticketDetails?.ticket?.noOfResourcesR || 0 }}</p>
+        </div>
+      </div>
+      <div>
+        <div class="volunteer">
+          <p class="light-color">Volunteer</p>
+          <p>{{ ticketDetails?.ticket?.volunteer }}</p>
+        </div>
+        <div class="frequency">
+          <p class="light-color">Frequency</p>
+          <p>{{ ticketDetails?.ticket?.freq }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="column-two">
+      <div>
+        <p>{{ ticketDetails?.poc?.party }}</p>
+        <h3>{{ ticketDetails?.poc?.organization }}</h3>
+        <p>{{ ticketDetails?.poc?.location }}</p>
+      </div>
+      <div>
+        <div>
+          <p class="light-color">Point Of Contact</p>
+          <p>{{ ticketDetails?.poc?.name }}</p>
+          <p>{{ ticketDetails?.poc?.email }}</p>
+          <p>{{ ticketDetails?.poc?.phone }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="full-grid-column">
+      <div class="created-date">
+        <p class="light-color">Created Date</p>
+        <p>{{ ticketDetails?.ticket?.createdDate }}</p>
+      </div>
+      <div class="created-date">
+        <p class="light-color">Last Updated</p>
+        <p>{{ ticketDetails?.ticket?.updatedDate || "" }}</p>
+      </div>
+      <div class="created-date">
+        <p class="light-color">Closed Date</p>
+        <p>{{ ticketDetails?.ticket?.closedDate || "" }}</p>
+      </div>
+      <div class="location">
+        <p class="light-color">Location</p>
+        <p>{{ ticketDetails?.poc?.location }}</p>
+      </div>
+    </div>
+    <!-- <div>
+      <p>Parent Request</p>
+      <div>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+      </div>
+    </div> -->
+  </div>
+</div>
+<div mat-dialog-actions>
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+  <button mat-button (click)="closePopup()" cdkFocusInitial>
+    Ok
+  </button>
+</div>
