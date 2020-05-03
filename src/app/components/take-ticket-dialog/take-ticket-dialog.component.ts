@@ -60,13 +60,8 @@ export class TakeTicketDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.api.getUsersList('user').subscribe((data) => {
-      this.usersList = [...data.people];
-    });
-    this.api.getUsersList('volunteer').subscribe((data) => {
-      this.volunteersList = data.volunteer;
-      console.log(this.volunteersList);
-    });
+    this.getUsersList();
+    this.getVolunteersList();
     this.getTicketsList();
     this.getRequestDetails();
     this.filteredUsersList = this.ticketForm.controls.poc
@@ -91,6 +86,16 @@ export class TakeTicketDialogComponent implements OnInit {
   getTicketsList() {
     this.api.getTicketsList(this.data.requestID).subscribe((data) => {
       this.tickets = data.tickets;
+    });
+  }
+  getUsersList() {
+    this.api.getUsersList('user').subscribe((data) => {
+      this.usersList = [...data.people];
+    });
+  }
+  getVolunteersList() {
+    this.api.getUsersList('volunteer').subscribe((data) => {
+      this.volunteersList = data.volunteer;
     });
   }
   getRequestDetails() {
@@ -129,6 +134,8 @@ export class TakeTicketDialogComponent implements OnInit {
       (data) => {
         this.ticketForm.reset();
         this.getTicketsList();
+        this.getUsersList();
+        this.getVolunteersList();
         Swal.fire({
           title: 'Ticket creation successful',
           icon: 'success',

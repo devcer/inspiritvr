@@ -39,9 +39,18 @@
     </div>
     <div class="column-two">
       <div>
-        <p>{{ ticketDetails?.poc?.party }}</p>
-        <h3>{{ ticketDetails?.poc?.organization }}</h3>
-        <p>{{ ticketDetails?.poc?.location }}</p>
+        <div class="party">
+          <p class="light-color">Party</p>
+          <p>{{ ticketDetails?.poc?.party }}</p>
+        </div>
+        <div class="organization">
+          <p class="light-color">Organization</p>
+          <p>{{ ticketDetails?.poc?.organization }}</p>
+        </div>
+        <div class="org-location">
+          <p class="light-color">Location</p>
+          <p>{{ ticketDetails?.poc?.location }}</p>
+        </div>
       </div>
       <div>
         <div>

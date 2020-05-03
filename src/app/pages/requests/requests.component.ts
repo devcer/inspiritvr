@@ -33,7 +33,7 @@ export class RequestsComponent implements OnInit {
     'priority',
   ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
   requestObj: RequestElement = {
     details: '',
     poc: '',
@@ -51,7 +51,7 @@ export class RequestsComponent implements OnInit {
     pending: 0,
     inProgress: 0,
     resolved: 0,
-    unresolved: 0
+    unresolved: 0,
   };
   constructor(
     public dialog: MatDialog,
@@ -145,7 +145,7 @@ export class RequestsComponent implements OnInit {
         //   this.createUser(result.refPoc, 'user');
         // }
         // this.createUser(result.volunteer, 'volunteer');
-        if(result === 'reloadRequests') {
+        if (result === 'reloadRequests') {
           this.getRequestsList();
         }
       }
@@ -177,7 +177,7 @@ export class RequestsComponent implements OnInit {
   }
   onClickTableCell(row) {
     this.getTicketsList(row.requestID);
-    const ticket = {...row, ...{tickets: this.activeTickets}};
+    const ticket = { ...row, ...{ tickets: this.activeTickets } };
     const dialogRef = this.dialog.open(TakeTicketDialogComponent, {
       width: '1200px',
       data: ticket,
@@ -275,6 +275,10 @@ export class RequestsComponent implements OnInit {
       });
     }
   }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }
 
 export interface RequestElement {
@@ -300,6 +304,7 @@ export interface TicketElement {
   noOfResourcesRemaining?: string; // No of resources Remaining
   duration: number; // In days
   frequency:
+    | 'One Time'
     | 'Daily'
     | 'Once in Two days'
     | 'Weekly'

@@ -1,12 +1,12 @@
 
 .radio-group {
-  display: flex;
-  flex-direction: column;
-  margin: 15px 0;
+  // display: flex;
+  // flex-direction: column;
+  margin: 10px;
 }
 
 .radio-button {
-  margin: 5px;
+  margin: 10px;
 }
 
 .width-30{
@@ -54,4 +54,12 @@ mat-card {
 .logTime, .refPoc {
   width: 50%;
   float: right;
+}
+.party, .organization {
+  float: left;
+  width: 33%;
+}
+.location {
+  float: right;
+  width: 33%;
 }

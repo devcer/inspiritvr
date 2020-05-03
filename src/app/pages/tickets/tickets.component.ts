@@ -9,6 +9,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { formFields } from 'src/app/data/formFields';
 import Swal from 'sweetalert2';
 import { TicketDetailsComponent } from 'src/app/components/ticket-details/ticket-details.component';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-tickets',
@@ -35,6 +36,7 @@ export class TicketsComponent implements OnInit {
     'location',
   ];
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
   natureOfTickets = 'give';
   statusTypes = formFields.status;
   ticketsList: TicketElement[] = [];
@@ -87,6 +89,7 @@ export class TicketsComponent implements OnInit {
       });
       this.dataSource.data = this.ticketsList;
       this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
       this.selectedTabIndex = 0;
       this.selection.clear();
     });
@@ -184,5 +187,9 @@ export class TicketsComponent implements OnInit {
   }
   updateTicketTypeWithButton(ev) {
     // debugger;
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

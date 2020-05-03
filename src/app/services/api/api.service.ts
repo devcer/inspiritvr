@@ -50,6 +50,7 @@ export class ApiService {
     formData.append('state', 'Open');
     formData.append('volunteer', data.volunteer);
     formData.append('comments', data.comment);
+    formData.append('location', data.location);
     return this.http.post(url, formData);
   }
   getTicketsList(requestID = '', natureOfRequest = ''): Observable<any> {

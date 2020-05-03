@@ -20,9 +20,18 @@
     </div>
     <div class="column-two">
       <div>
-        <p>{{ requestDetails?.poc?.party }}</p>
-        <h3>{{ requestDetails?.poc?.organization }}</h3>
-        <p>{{ requestDetails?.poc?.location }}</p>
+        <div class="party">
+          <p class="light-color">Party</p>
+          <p>{{ requestDetails?.poc?.party }}</p>
+        </div>
+        <div class="organization">
+          <p class="light-color">Organization</p>
+          <p>{{ requestDetails?.poc?.organization }}</p>
+        </div>
+        <div class="location">
+          <p class="light-color">Location</p>
+          <p>{{ requestDetails?.poc?.location }}</p>
+        </div>
       </div>
       <div>
         <div class="poc">
@@ -45,8 +54,15 @@
     </div>
   </div>
   <div class="width-60">
-    <h3  class="light-color" style="display: inline;">Registered Tickets</h3>
-    <button mat-raised-button color="primary" class="create-new-ticket" (click)="onClickCreateNewTicket()">CREATE NEW TICKET</button>
+    <h3 class="light-color" style="display: inline;">Registered Tickets</h3>
+    <button
+      mat-raised-button
+      color="primary"
+      class="create-new-ticket"
+      (click)="onClickCreateNewTicket()"
+    >
+      CREATE NEW TICKET
+    </button>
     <div>
       <mat-card *ngFor="let ticket of tickets">
         <mat-card-content
@@ -60,19 +76,21 @@
     </div>
   </div>
   <div [formGroup]="ticketForm" *ngIf="showCreateTicketForm">
-    <label id="nature-ticket-label">Nature of Ticket</label>
-    <mat-radio-group
-      class="radio-group"
-      aria-labelledby="nature-ticket-label"
-      formControlName="natureOfTicket"
-    >
-      <mat-radio-button class="radio-button" value="give"
-        >Give</mat-radio-button
+    <div class="margin-10px">
+      <label id="nature-ticket-label">Nature of Ticket</label>
+      <mat-radio-group
+        class="radio-group"
+        aria-labelledby="nature-ticket-label"
+        formControlName="natureOfTicket"
       >
-      <mat-radio-button class="radio-button" value="need"
-        >Need</mat-radio-button
-      >
-    </mat-radio-group>
+        <mat-radio-button class="radio-button" value="give"
+          >Give</mat-radio-button
+        >
+        <mat-radio-button class="radio-button" value="need"
+          >Need</mat-radio-button
+        >
+      </mat-radio-group>
+    </div>
     <mat-form-field class="width-30">
       <mat-label>Select Resource</mat-label>
       <mat-select formControlName="resource" required>

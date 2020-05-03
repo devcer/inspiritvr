@@ -3,7 +3,7 @@
     <h2>Tickets</h2>
   </div>
   <div class="margin-20">
-    <mat-radio-group
+    <mat-radio-group  class="margin-20"
       [(ngModel)]="natureOfTickets"
       (change)="updateTicketType()"
     >
@@ -18,7 +18,7 @@
       <mat-button-toggle value="give">Gives</mat-button-toggle>
       <mat-button-toggle value="need">Needs</mat-button-toggle>
     </mat-button-toggle-group> -->
-    <mat-form-field>
+    <mat-form-field  class="margin-20">
       <mat-label>MARK AS</mat-label>
       <mat-select (selectionChange)="updateStatusTypes($event)">
         <mat-option
@@ -28,6 +28,10 @@
           {{ status.displayName }}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field class="margin-20">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. N95">
     </mat-form-field>
   </div>
 </div>
@@ -77,7 +81,7 @@
       </ng-template>
     </mat-tab>
   </mat-tab-group>
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
     <ng-container matColumnDef="select">
       <th mat-header-cell *matHeaderCellDef>
         <mat-checkbox
@@ -100,13 +104,13 @@
     </ng-container>
     <!-- Position Column -->
     <ng-container matColumnDef="logTime">
-      <th mat-header-cell *matHeaderCellDef>Last Updated</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Last Updated</th>
       <td mat-cell *matCellDef="let element">{{ element.logTime }}</td>
     </ng-container>
 
     <!-- Name Column -->
     <ng-container matColumnDef="ticketID">
-      <th mat-header-cell *matHeaderCellDef>Ticket ID</th>
+      <th mat-header-cell *matHeaderCellDef >Ticket ID</th>
       <td mat-cell *matCellDef="let element">
         <button (click)="onClickTableCell(element)">
           {{ element.ticketID }}
@@ -116,50 +120,50 @@
 
     <!-- Weight Column -->
     <ng-container matColumnDef="resource">
-      <th mat-header-cell *matHeaderCellDef>Resource</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Resource</th>
       <td mat-cell *matCellDef="let element">{{ element.resource }}</td>
     </ng-container>
 
     <!-- Symbol Column -->
     <ng-container matColumnDef="noOfResourcesNeedAvailable">
-      <th mat-header-cell *matHeaderCellDef>Total Quantity</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Total Quantity</th>
       <td mat-cell *matCellDef="let element">
         {{ element.noOfResourcesNeedAvailable }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="noOfResourcesConsumed">
-      <th mat-header-cell *matHeaderCellDef>Consumed</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Consumed</th>
       <td mat-cell *matCellDef="let element">
         {{ element.noOfResourcesConsumed }}
       </td>
     </ng-container>
     <ng-container matColumnDef="noOfResourcesRemaining">
-      <th mat-header-cell *matHeaderCellDef>Remaining</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Remaining</th>
       <td mat-cell *matCellDef="let element">
         {{ element.noOfResourcesRemaining }}
       </td>
     </ng-container>
     <ng-container matColumnDef="poc">
-      <th mat-header-cell *matHeaderCellDef>POC</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>POC</th>
       <td mat-cell *matCellDef="let element">{{ element.poc }}</td>
     </ng-container>
     <ng-container matColumnDef="volunteer">
-      <th mat-header-cell *matHeaderCellDef>Volunteer</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Volunteer</th>
       <td mat-cell *matCellDef="let element">{{ element.volunteer }}</td>
     </ng-container>
     <ng-container matColumnDef="duration">
-      <th mat-header-cell *matHeaderCellDef>Duration</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Duration</th>
       <td mat-cell *matCellDef="let element">
         {{ element.duration + " days" }}
       </td>
     </ng-container>
     <ng-container matColumnDef="frequency">
-      <th mat-header-cell *matHeaderCellDef>Frequency</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Frequency</th>
       <td mat-cell *matCellDef="let element">{{ element.frequency }}</td>
     </ng-container>
     <ng-container matColumnDef="location">
-      <th mat-header-cell *matHeaderCellDef>Location</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Location</th>
       <td mat-cell *matCellDef="let element">{{ element.location }}</td>
     </ng-container>
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

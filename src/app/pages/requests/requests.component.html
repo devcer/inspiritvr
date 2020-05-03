@@ -3,13 +3,17 @@
     <h1>Requests</h1>
   </div>
   <div class="margin-20">
-    <mat-form-field>
+    <mat-form-field class="margin-20">
       <mat-label>MARK AS</mat-label>
       <mat-select (selectionChange)="updateStatusTypes($event)">
         <mat-option *ngFor="let status of statusTypes" [value]="status.displayName">
           {{status.displayName}}
         </mat-option>
       </mat-select>
+    </mat-form-field>
+    <mat-form-field class="margin-20">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. N95">
     </mat-form-field>
     <button mat-raised-button class="take-request" color="primary" (click)="openDialog()">
       <mat-icon matTooltip="Create Request">info_circle</mat-icon>
