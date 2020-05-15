@@ -12,8 +12,9 @@
       </mat-select>
     </mat-form-field>
     <mat-form-field class="margin-20">
-      <mat-label>Filter</mat-label>
+      <mat-label>Search requests</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. N95">
+      <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
     <button mat-raised-button class="take-request" color="primary" (click)="openDialog()">
       <mat-icon matTooltip="Create Request">info_circle</mat-icon>

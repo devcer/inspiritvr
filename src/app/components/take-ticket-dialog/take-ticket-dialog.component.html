@@ -60,6 +60,7 @@
       color="primary"
       class="create-new-ticket"
       (click)="onClickCreateNewTicket()"
+      cdkFocusInitial
     >
       CREATE NEW TICKET
     </button>
@@ -75,7 +76,7 @@
       </mat-card>
     </div>
   </div>
-  <div [formGroup]="ticketForm" *ngIf="showCreateTicketForm">
+  <div [formGroup]="ticketForm" *ngIf="showCreateTicketForm" id="form">
     <div class="margin-10px">
       <label id="nature-ticket-label">Nature of Ticket</label>
       <mat-radio-group
@@ -101,7 +102,7 @@
     </mat-form-field>
     <mat-form-field class="width-30">
       <mat-label>Resource Quantity</mat-label>
-      <input matInput formControlName="noOfResourcesNeedAvailable" required />
+      <input matInput formControlName="noOfResourcesNeedAvailable" required/>
     </mat-form-field>
     <mat-form-field class="width-30">
       <mat-label>Duration (In Days)</mat-label>

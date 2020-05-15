@@ -35,7 +35,7 @@ import { TicketsComponent } from './pages/tickets/tickets.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
-import {MatButtonToggleModule} from '@angular/material/button-toggle'; 
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 @NgModule({
   declarations: [
@@ -72,7 +72,7 @@ import {MatButtonToggleModule} from '@angular/material/button-toggle';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatSortModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
   ],
   providers: [DataService],
   bootstrap: [AppComponent],

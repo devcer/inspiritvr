@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TakeRequestDialogComponent } from '../take-request-dialog/take-request-dialog.component';
 import { formFields } from 'src/app/data/formFields';
@@ -10,6 +10,8 @@ import {
 } from 'src/app/pages/requests/requests.component';
 import { Observable } from 'rxjs';
 import { startWith, map } from 'rxjs/operators';
+import { MatInput } from '@angular/material/input';
+import { MatSelect } from '@angular/material/select';
 
 @Component({
   selector: 'app-take-ticket-dialog',
