@@ -12,7 +12,6 @@ import { TakeRequestDialogComponent } from './components/take-request-dialog/tak
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartModule } from 'angular-highcharts';
-import { AngularRaveModule } from 'angular-rave';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -77,8 +76,7 @@ import { HomeComponent } from './pages/home/home.component';
     MatAutocompleteModule,
     ReactiveFormsModule,
     MatSortModule,
-    MatButtonToggleModule,
-    AngularRaveModule
+    MatButtonToggleModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent],
