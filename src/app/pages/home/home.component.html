@@ -1,7 +1,16 @@
-<button mat-button (click)="makePayment()"> Make Payment </button>
 
-<div>
-    <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;">
-    <h2 *ngIf="paypalLoad">Paypal button is loading</h2>
-    <div id="paypal-checkout-btn"></div>
-</div>
+<mat-grid-list cols="3">
+    <mat-grid-tile></mat-grid-tile>
+    <mat-grid-tile>
+        <div style="text-align: center;">
+            <mat-form-field class="example-full-width">
+                <mat-label>Amount to pay</mat-label>
+                <input matInput type="number" [(ngModel)]="finalAmount">
+            </mat-form-field>
+            <!-- <input type="number" [(ngModel)]="finalAmount" style="padding-bottom: 10px;"> -->
+            <h2 *ngIf="paypalLoad">Paypal button is loading</h2>
+            <div class="paypal-button" id="paypal-checkout-btn"></div>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile></mat-grid-tile>
+</mat-grid-list>

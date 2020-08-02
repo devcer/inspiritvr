@@ -21,7 +21,16 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       sandbox:
         'AZyKvhuTI9EC6ckfPDyfL7PrH4csnolcYelT4oWIgIP8CjvBQaJqs5VN2vtnX-90YUsS0LZq4pYyOouq',
     },
+    locale: 'en_US',
+    style: {
+      size: 'medium',
+      color: 'black',
+      shape: 'rect',
+      tagline: true
+    },
+    // Enable Pay Now checkout flow (optional)
     commit: true,
+    // Set up a payment
     payment: (data, actions) => {
       return actions.payment.create({
         payment: {
@@ -40,20 +49,13 @@ export class HomeComponent implements OnInit, AfterViewChecked {
         });
       });
     },
-    onApprove: function(data, actions) {
-      // This function captures the funds from the transaction.
-      return actions.order.capture().then(function(details) {
-        // This function shows a transaction success message to your buyer.
-        alert('Transaction completed by ' + details.payer.name.given_name);
-      });
-    },
     onError: function (err) {
       // Show an error page here, when an error occurs
       Swal.fire({
         title: 'Transaction failed! Please try again.',
         icon: 'success',
       });
-    }
+    },
   };
 
   constructor(private paymentService: PaymentService) {}

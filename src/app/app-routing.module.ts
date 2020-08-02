@@ -5,24 +5,33 @@ import { RequestsComponent } from './pages/requests/requests.component';
 import { TicketsComponent } from './pages/tickets/tickets.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AuthGuardService } from './services/auth/auth-guard.service';
 
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/home',
+    redirectTo: '/products',
     pathMatch: 'full'
   },
   {
-    path: 'reports',
+    path: 'products',
     component: ReportsComponent
   },
   {
-    path: 'requests',
+    path: 'curriculum',
+    component: ReportsComponent
+  },
+  {
+    path: 'download',
     component: RequestsComponent
   },
   {
-    path: 'tickets',
+    path: 'about',
+    component: RequestsComponent
+  },
+  {
+    path: 'contact',
     component: TicketsComponent
   },
   {
@@ -31,7 +40,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    component: HomeComponent
+    component: HomeComponent,
+    canActivate: [ AuthGuardService ]
   }
 ];
 

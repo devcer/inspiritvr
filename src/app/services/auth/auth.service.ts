@@ -33,13 +33,13 @@ export class AuthService {
     // }
     localStorage.setItem('auth_token', "user_logged_in");
     this.isAuthenticated.next(true);
-
+    this.router.navigate(['/home']);
     // this.authClient.session.setCookieAndRedirect(transaction.sessionToken);
   }
 
   async logout(redirect: string) {
     try {
-      localStorage.setItem('auth_token', null);
+      localStorage.setItem('auth_token', '');
       this.isAuthenticated.next(false);
       this.router.navigate([redirect]);
     } catch (err) {
