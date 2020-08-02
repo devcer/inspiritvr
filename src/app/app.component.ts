@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { DataService } from './services/data/data.service';
 import { Router, NavigationEnd } from '@angular/router';
+import { AuthService } from './services/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -10,18 +11,16 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'tg-corona-app';
   showTakeRequestButton = false;
-  constructor(private data: DataService, private router: Router) {
-    // this.router.events.subscribe(event =>  {
-    //   if(event instanceof NavigationEnd ) {
-    //     if(event.url.includes('requests')) {
-    //       this.showTakeRequestButton = true;
-    //     } else {
-    //       this.showTakeRequestButton = false;
-    //     }
-    //   }
-    // });
+  isAuthenticated: boolean;
+  constructor(private data: DataService, private router: Router, private auth: AuthService) {
+    this.auth.isAuthenticated.subscribe(
+      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+    );
   }
-  // createRequest() {
-  //   this.data.createRequest('');
-  // }
+  async ngOnInit() {
+    this.isAuthenticated = await this.auth.checkAuthenticated();
+  }
+  logout() {
+    this.auth.logout('/');
+  }
 }

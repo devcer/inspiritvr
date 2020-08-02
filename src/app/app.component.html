@@ -44,8 +44,8 @@
     height: 60px;
     display: flex;
     align-items: center;
-    background-color: #ffffff;
-    color: #333333;
+    background-color: #6800fa;
+    color: #ffffff;
     font-weight: 600;
   }
 
@@ -293,18 +293,19 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
   <img
-    width="40"
+    width="120"
     alt="Angular Logo"
-    src="assets/collabhouse.png"
+    src="assets/inspirit.png"
   />
   <!-- <span>Welcome</span> -->
-  <a routerLink="/reports" routerLinkActive="active" mat-button>Dashboard</a>
-  <a routerLink="/requests" routerLinkActive="active" mat-button>Requests</a>
-  <a routerLink="/tickets" routerLinkActive="active" mat-button>Tickets</a>
-  <a mat-button>Contacts</a>
-
+  <a routerLink="/home" routerLinkActive="active" mat-button>Product</a>
+  <a routerLink="/requests" routerLinkActive="active" mat-button>Curriculum</a>
+  <a routerLink="/tickets" routerLinkActive="active" mat-button>About</a>
+  <a routerLink="/tickets" routerLinkActive="active" mat-button>Download</a>
+  <a mat-button>Contact</a>  
   <div class="spacer"></div>
-  
+  <a routerLink="/login" routerLinkActive="active" mat-button *ngIf="!isAuthenticated">Sign in</a>
+  <button mat-button (click)="logout()" *ngIf="isAuthenticated">Log out</button>
 </div>
 
 <div class="content" role="main">

@@ -12,6 +12,7 @@ import { TakeRequestDialogComponent } from './components/take-request-dialog/tak
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ChartModule } from 'angular-highcharts';
+import { AngularRaveModule } from 'angular-rave';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatGridListModule } from '@angular/material/grid-list';
@@ -36,6 +37,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatSortModule } from '@angular/material/sort';
 import { TicketDetailsComponent } from './components/ticket-details/ticket-details.component';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { LoginComponent } from './pages/login/login.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     TakeTicketDialogComponent,
     TicketsComponent,
     TicketDetailsComponent,
+    LoginComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -73,6 +78,7 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
     ReactiveFormsModule,
     MatSortModule,
     MatButtonToggleModule,
+    AngularRaveModule
   ],
   providers: [DataService],
   bootstrap: [AppComponent],
