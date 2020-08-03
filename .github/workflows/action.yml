@@ -25,6 +25,6 @@ jobs:
     - name: Deploy to Firebase
       uses: w9jds/firebase-action@v1.3.0
       with:
-        args: deploy --only hosting --project tg-corona-app
+        args: deploy --only hosting --project inspiritvr
       env:
         FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}

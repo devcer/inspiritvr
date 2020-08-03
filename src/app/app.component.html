@@ -156,7 +156,6 @@
     z-index: -10;
   }
 
-
   .terminal {
     position: relative;
     width: 80%;
@@ -292,19 +291,23 @@
 
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <img
-    width="120"
-    alt="Angular Logo"
-    src="assets/inspirit.png"
-  />
+  <img width="120" alt="Angular Logo" src="assets/inspirit.png" />
   <!-- <span>Welcome</span> -->
   <a routerLink="/products" routerLinkActive="active" mat-button>Product</a>
-  <a routerLink="/curriculum" routerLinkActive="active" mat-button>Curriculum</a>
+  <a routerLink="/curriculum" routerLinkActive="active" mat-button
+    >Curriculum</a
+  >
   <a routerLink="/about" routerLinkActive="active" mat-button>About</a>
   <a routerLink="/download" routerLinkActive="active" mat-button>Download</a>
   <a routerLink="/contact" routerLinkActive="active" mat-button>Contact</a>
   <div class="spacer"></div>
-  <a routerLink="/login" routerLinkActive="active" mat-button *ngIf="!isAuthenticated">Sign in</a>
+  <a
+    routerLink="/login"
+    routerLinkActive="active"
+    mat-button
+    *ngIf="!isAuthenticated"
+    >Sign in</a
+  >
   <button mat-button (click)="logout()" *ngIf="isAuthenticated">Log out</button>
 </div>
 
@@ -319,4 +322,3 @@
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
 <!-- * * * * * * * * * * End of Placeholder * * * * * * * * * * * -->
 <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-

@@ -61,10 +61,6 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   constructor(private paymentService: PaymentService) {}
 
   ngOnInit(): void {}
-
-  makePayment() {
-    this.paymentService.createOrder();
-  }
   ngAfterViewChecked(): void {
     if (!this.addScript) {
       this.addPaypalScript().then(() => {

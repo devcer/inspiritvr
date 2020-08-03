@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "tg-corona-app": {
+    "inspiritvr": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/tg-corona-app",
+            "outputPath": "dist/inspiritvr",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -95,21 +95,21 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "tg-corona-app:build"
+            "browserTarget": "inspiritvr:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "tg-corona-app:build:production"
+              "browserTarget": "inspiritvr:build:production"
             },
             "collab": {
-              "browserTarget": "tg-corona-app:build:collab"
+              "browserTarget": "inspiritvr:build:collab"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "tg-corona-app:build"
+            "browserTarget": "inspiritvr:build"
           }
         },
         "test": {
@@ -147,11 +147,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "tg-corona-app:serve"
+            "devServerTarget": "inspiritvr:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "tg-corona-app:serve:production"
+              "devServerTarget": "inspiritvr:serve:production"
             }
           }
         },
@@ -162,5 +162,5 @@
       }
     }
   },
-  "defaultProject": "tg-corona-app"
+  "defaultProject": "inspiritvr"
 }

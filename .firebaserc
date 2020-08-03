@@ -1,11 +1,5 @@
 {
-  "targets": {
-    "tg-corona-app": {
-      "hosting": {
-        "tg-corona-app": [
-          "tg-corona-app"
-        ]
-      }
-    }
+  "projects": {
+    "default": "inspiritvr-f3d77"
   }
 }

@@ -11,12 +11,6 @@ export class ApiService {
   serverUrl = environment.serverUrl;
   constructor(private http: HttpClient) {}
   createRequest(
-    // poc: string,
-    // rpoc: string,
-    // channel: string,
-    // details: string,
-    // priority: 'HIGH' | 'MEDIUM' | 'LOW',
-    // assignedTo: string
     data: RequestElement
   ): Observable<any> {
     const url = `${this.serverUrl}/raiseRequest`;

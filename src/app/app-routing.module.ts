@@ -7,46 +7,45 @@ import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
 import { AuthGuardService } from './services/auth/auth-guard.service';
 
-
 const routes: Routes = [
   {
     path: '',
     redirectTo: '/products',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'products',
-    component: ReportsComponent
+    component: ReportsComponent,
   },
   {
     path: 'curriculum',
-    component: ReportsComponent
+    component: ReportsComponent,
   },
   {
     path: 'download',
-    component: RequestsComponent
+    component: RequestsComponent,
   },
   {
     path: 'about',
-    component: RequestsComponent
+    component: RequestsComponent,
   },
   {
     path: 'contact',
-    component: TicketsComponent
+    component: TicketsComponent,
   },
   {
     path: 'login',
-    component: LoginComponent
+    component: LoginComponent,
   },
   {
     path: 'home',
     component: HomeComponent,
-    canActivate: [ AuthGuardService ]
-  }
+    canActivate: [AuthGuardService],
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

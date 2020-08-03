@@ -6,15 +6,17 @@ import { AuthService } from './services/auth/auth.service';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'tg-corona-app';
+  title = 'inspiritvr';
   showTakeRequestButton = false;
   isAuthenticated: boolean;
-  constructor(private data: DataService, private router: Router, private auth: AuthService) {
+  constructor(
+    private auth: AuthService
+  ) {
     this.auth.isAuthenticated.subscribe(
-      (isAuthenticated: boolean)  => this.isAuthenticated = isAuthenticated
+      (isAuthenticated: boolean) => (this.isAuthenticated = isAuthenticated)
     );
   }
   async ngOnInit() {
